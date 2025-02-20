@@ -10,4 +10,12 @@ class ProfileController extends Controller
     {
         return view('profile.index');
     }
+    public function auth()
+    {
+        return view('profile.auth');
+    }
+    public function reg()
+    {
+        return view('profile.reg');
+    }
 }

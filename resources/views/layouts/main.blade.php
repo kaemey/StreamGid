@@ -18,7 +18,7 @@
 
 <body>
 
-    <div class="container-fluid" style="padding: 2%">
+    <div class="container-fluid" style="padding: 2%;">
         <div class="row top_nav">
             <div class="col-1 border">
                 Logo
@@ -27,12 +27,17 @@
                 Название
             </div>
             <div class="col text-end border" style="padding-right: 5%">
+                @if (Auth::check())
                 <a href="{{ route('profile') }}"><img src="{{ asset('images/user.png') }}" width="48"></a>
+                @else
+                <a href="{{ route('auth') }}">Авторизация /</a>
+                <a href="{{ route('reg') }}"> Регистрация</a>
+                @endif
             </div>
         </div>
     </div>
 
-    <main>
+    <main style="height: 500px">
         @yield('content')
     </main>
 
