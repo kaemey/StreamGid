@@ -28,4 +28,8 @@ class ProfileController extends Controller
     {
         return view('profile.reg');
     }
+    public function saveAvatar()
+    {
+        return redirect()->route('profile');
+    }
 }

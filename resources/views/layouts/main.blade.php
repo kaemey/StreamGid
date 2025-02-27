@@ -28,7 +28,14 @@
             </div>
             <div class="col text-end border" style="padding-right: 5%">
                 @if (Auth::check())
-                <a href="{{ route('profile') }}"><img src="{{ asset('images/user.png') }}" width="48"></a>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <a href="{{ route('profile') }}"><img src="{{ asset('images/user.png') }}" width="48"></a>
+                    <button>
+                        <img src="images/logout.png" width="48" />
+                    </button>
+                </form>
                 @else
                 <a href="{{ route('auth') }}">Авторизация /</a>
                 <a href="{{ route('reg') }}"> Регистрация</a>
