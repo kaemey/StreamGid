@@ -29,9 +29,23 @@
                         <tr>
                             <th>Аватар</th>
                             @if (isset($user['avatar']))
-                            <td><img src="{{ $user['avatar'] }}" width="50%"></td>
+                            <td>
+                                <img src="{{ asset($user['avatar']) }}" width="50%"><br><br>
+                                <form enctype="multipart/form-data" method="post" action="{{ route('upload_avatar') }}">
+                                    @csrf
+                                    <input type="file" name="avatar">
+                                    <input type="submit" value="Загрузить">
+                                </form>
+                            </td>
                             @else
-                            <td><img src="images/image.png" width="50%"></td>
+                            <td>
+                                <img src="images/image.png" width="50%"><br><br>
+                                <form enctype="multipart/form-data" method="post" action="{{ route('upload_avatar') }}">
+                                    @csrf
+                                    <input type="file" name="avatar">
+                                    <input type="submit" value="Загрузить">
+                                </form>
+                            </td>
                             @endif
                         </tr>
                     </tbody>

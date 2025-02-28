@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -28,8 +32,16 @@ class ProfileController extends Controller
     {
         return view('profile.reg');
     }
-    public function saveAvatar()
+    public function upload_avatar(Request $request): RedirectResponse
     {
+        $request->validate([
+            'avatar' => 'required|image',
+        ]);
+        $userData = Auth::user();
+        $imageName = $userData['id'] . '.' . $request->avatar->extension();
+        $request->avatar->move(public_path('storage/avatars/'), $imageName);
+        User::where('id', $userData['id'])->update(['avatar' => 'storage/avatars/' . $userData['id'] . '.jpg']);
+
         return redirect()->route('profile');
     }
 }
