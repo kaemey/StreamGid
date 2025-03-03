@@ -24,6 +24,37 @@ class ProfileController extends Controller
 
         return view('profile.index', compact('user'));
     }
+    public function edit()
+    {
+        $userData = Auth::user();
+        $user = [
+            'id' => $userData['id'],
+            'name' => $userData['name'],
+            'phone' => $userData['phone'],
+            'isStreamer' => $userData['isStreamer'],
+            'email' => $userData['email'],
+            'avatar' => $userData['avatar'],
+        ];
+
+        return view('profile.edit', compact('user'));
+    }
+    public function update(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email'
+        ]);
+        $userData = Auth::user();
+        $request = $request->toArray();
+        $data = [
+            'name' => $request['name'],
+            'phone' => $request['phone'],
+            'email' => $request['email'],
+        ];
+        User::where('id', $userData['id'])->update($data);
+        return redirect()->route('profile');
+    }
     public function auth()
     {
         return view('profile.auth');
