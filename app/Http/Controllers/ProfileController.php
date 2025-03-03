@@ -10,8 +10,18 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
+
+    private function checkAuth()
+    {
+        if (!(Auth::check())) {
+            header('Location: ' . route('home'));
+            die();
+        }
+    }
+
     public function index()
     {
+        $this->checkAuth();
         $userData = Auth::user();
         $user = [
             'id' => $userData['id'],
@@ -26,6 +36,7 @@ class ProfileController extends Controller
     }
     public function edit()
     {
+        $this->checkAuth();
         $userData = Auth::user();
         $user = [
             'id' => $userData['id'],
@@ -40,6 +51,7 @@ class ProfileController extends Controller
     }
     public function update(Request $request)
     {
+        $this->checkAuth();
         $request->validate([
             'name' => 'required',
             'phone' => 'required',
@@ -65,6 +77,7 @@ class ProfileController extends Controller
     }
     public function upload_avatar(Request $request): RedirectResponse
     {
+        $this->checkAuth();
         $request->validate([
             'avatar' => 'required|image',
         ]);
