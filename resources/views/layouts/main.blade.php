@@ -1,3 +1,9 @@
+<?php
+use App\Models\City;
+
+$cities = City::all();
+?>
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -45,7 +51,18 @@
     </div>
 
     <main style="height: 500px">
-        @yield('content')
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2 text-center border">
+
+                    @foreach ($cities as $city)
+                    <a href="123123">{{ $city['name'] }}</a></br>
+                    @endforeach
+                </div>
+                @yield('content')
+            </div>
+
+        </div>
     </main>
 
     <footer>
