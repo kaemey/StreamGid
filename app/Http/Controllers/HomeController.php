@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Form;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,6 +26,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('main');
+        $forms = Form::all();
+        $formsData = [];
+        foreach ($forms as $form) {
+            $user = $form->user;
+            $formsData[] = [
+                'city' => City::find($form['city_id'])->name,
+                'photo' => $user->avatar,
+                'username' => $user->name,
+                'id' => $form->id
+            ];
+        }
+
+        return view('main', compact('formsData'));
     }
 }

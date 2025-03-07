@@ -35,16 +35,16 @@ $cities = City::all();
             <div class="col text-end border" style="padding-right: 5%">
                 @if (Auth::check())
 
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <a href="{{ route('profile') }}"><img src="{{ asset('images/user.png') }}" width="48"></a>
-                    <button>
-                        <img src="images/logout.png" width="48" />
-                    </button>
-                </form>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <a href="{{ route('profile') }}"><img src="{{ asset('images/user.png') }}" width="48"></a>
+                        <button>
+                            <img src="images/logout.png" width="48" />
+                        </button>
+                    </form>
                 @else
-                <a href="{{ route('auth') }}">Авторизация /</a>
-                <a href="{{ route('reg') }}"> Регистрация</a>
+                    <a href="{{ route('auth') }}">Авторизация /</a>
+                    <a href="{{ route('reg') }}"> Регистрация</a>
                 @endif
             </div>
         </div>
@@ -54,20 +54,27 @@ $cities = City::all();
         <div class="container-fluid">
             <div class="row">
                 <div class="col-2 text-center border">
-
+                    <div style="padding-bottom: 20px">
+                        <a href="{{ url("") }}">Все города</a></br>
+                    </div>
                     @foreach ($cities as $city)
-                    <a href="123123">{{ $city['name'] }}</a></br>
+                        <a href="{{ url("?city=" . $city['name']) }}">{{ $city['name'] }}</a></br>
                     @endforeach
                 </div>
                 @yield('content')
             </div>
 
         </div>
+        <div class="row">
+            <footer>
+                &copy; {{ date('Y') }} Мой сайт
+            </footer>
+        </div>
     </main>
 
-    <footer>
-        &copy; {{ date('Y') }} Мой сайт
-    </footer>
+
+
+
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
 
