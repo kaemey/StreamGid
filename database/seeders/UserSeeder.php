@@ -18,14 +18,5 @@ class UserSeeder extends Seeder
         User::factory(10)->create([
             'name' => 'Test User',
         ]);
-        User::create([
-            'name' => 'Макс',
-            'isStreamer' => 'true',
-            'phone' => '+79522017630',
-            'email' => "admin@mail.ru",
-            'password' => Hash::make('admin'),
-            'remember_token' => Str::random(10),
-            'email_verified_at' => now()
-        ]);
     }
 }

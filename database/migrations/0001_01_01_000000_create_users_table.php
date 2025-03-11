@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->float('rate')->nullable();
             $table->string('phone')->unique();
             $table->string('avatar')->nullable();
             $table->string('isStreamer');

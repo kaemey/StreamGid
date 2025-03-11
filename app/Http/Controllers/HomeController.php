@@ -34,7 +34,8 @@ class HomeController extends Controller
                 'city' => City::find($form['city_id'])->name,
                 'photo' => $user->avatar,
                 'username' => $user->name,
-                'id' => $form->id
+                'id' => $form->id,
+                'rate' => $user->rate
             ];
         }
 

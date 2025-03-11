@@ -18,10 +18,12 @@ class FormFactory extends Factory
      */
     public function definition(): array
     {
+        $user = User::factory()->create();
+        $user->update(['avatar' => "storage/avatars/" . $user->id . ".jpg"]);
         return [
             'city_id' => City::all()->random(),
             'about' => fake()->text(),
-            'user_id' => User::factory()->create()
+            'user_id' => $user->id,
         ];
     }
 }
