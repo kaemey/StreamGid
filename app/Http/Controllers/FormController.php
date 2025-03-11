@@ -10,7 +10,10 @@ class FormController extends Controller
     //
     public function index($id)
     {
-        $user = Form::find($id)->user->toArray();
+        $form = Form::find($id);
+        $user = $form->user->toArray();
+        $user['about'] = $form->about;
+        $user['form_id'] = $form->id;
 
         return view('form', compact('user'));
     }
