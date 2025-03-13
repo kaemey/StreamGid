@@ -35,16 +35,16 @@ $cities = City::all();
             <div class="col text-end border" style="padding-right: 5%">
                 @if (Auth::check())
 
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <a href="{{ route('profile') }}"><img src="{{ asset('images/user.png') }}" width="48"></a>
-                    <button>
-                        <img src="images/logout.png" width="48" />
-                    </button>
-                </form>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <a href="{{ route('profile') }}"><img src="{{ asset('images/user.png') }}" width="48"></a>
+                        <button>
+                            <img src="{{ asset('images/logout.png') }}" width="48" />
+                        </button>
+                    </form>
                 @else
-                <a href="{{ route('auth') }}">Авторизация /</a>
-                <a href="{{ route('reg') }}"> Регистрация</a>
+                    <a href="{{ route('auth') }}">Авторизация /</a>
+                    <a href="{{ route('reg') }}"> Регистрация</a>
                 @endif
             </div>
         </div>
@@ -58,7 +58,7 @@ $cities = City::all();
                         <a href="{{ url("") }}">Все города</a></br>
                     </div>
                     @foreach ($cities as $city)
-                    <a href="{{ url("?city=" . $city['name']) }}">{{ $city['name'] }}</a></br>
+                        <a href="{{ url("?city=" . $city['name']) }}">{{ $city['name'] }}</a></br>
                     @endforeach
                 </div>
                 @yield('content')

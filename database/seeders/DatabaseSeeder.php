@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Макс',
             'isStreamer' => 'true',
             'phone' => '+79522017630',
+            'timing' => '1:12:17;2:13:21;3:-:18;4:12:22;5:13:20;6:-:-;7:11:18;',
             'email' => "admin@mail.ru",
             'password' => Hash::make('admin'),
             'remember_token' => Str::random(10),
