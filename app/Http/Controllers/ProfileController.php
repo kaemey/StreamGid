@@ -28,53 +28,53 @@ class ProfileController extends Controller
             switch ($day[0]) {
                 case 1:
                     $timing['ПН'][0] = true;
-                    if ($day[1] == '-') {
+                    if ($day[1] == '0') {
                         $timing['ПН'][0] = false;
                     }
-                    $timing['ПН'][1] = $day[1];
-                    $timing['ПН'][2] = $day[2];
+                    $timing['ПН'][1] = $day[2];
+                    $timing['ПН'][2] = $day[3];
                 case 2:
                     $timing['ВТ'][0] = true;
-                    if ($day[1] == '-') {
+                    if ($day[1] == '0') {
                         $timing['ВТ'][0] = false;
                     }
-                    $timing['ВТ'][1] = $day[1];
-                    $timing['ВТ'][2] = $day[2];
+                    $timing['ВТ'][1] = $day[2];
+                    $timing['ВТ'][2] = $day[3];
                 case 3:
                     $timing['СР'][0] = true;
-                    if ($day[1] == '-') {
+                    if ($day[1] == '0') {
                         $timing['СР'][0] = false;
                     }
-                    $timing['СР'][1] = $day[1];
-                    $timing['СР'][2] = $day[2];
+                    $timing['СР'][1] = $day[2];
+                    $timing['СР'][2] = $day[3];
                 case 4:
                     $timing['ЧТ'][0] = true;
-                    if ($day[1] == '-') {
+                    if ($day[1] == '0') {
                         $timing['ЧТ'][0] = false;
                     }
-                    $timing['ЧТ'][1] = $day[1];
-                    $timing['ЧТ'][2] = $day[2];
+                    $timing['ЧТ'][1] = $day[2];
+                    $timing['ЧТ'][2] = $day[3];
                 case 5:
                     $timing['ПТ'][0] = true;
-                    if ($day[1] == '-') {
+                    if ($day[1] == '0') {
                         $timing['ПТ'][0] = false;
                     }
-                    $timing['ПТ'][1] = $day[1];
-                    $timing['ПТ'][2] = $day[2];
+                    $timing['ПТ'][1] = $day[2];
+                    $timing['ПТ'][2] = $day[3];
                 case 6:
                     $timing['СБ'][0] = true;
-                    if ($day[1] == '-') {
+                    if ($day[1] == '0') {
                         $timing['СБ'][0] = false;
                     }
-                    $timing['СБ'][1] = $day[1];
-                    $timing['СБ'][2] = $day[2];
+                    $timing['СБ'][1] = $day[2];
+                    $timing['СБ'][2] = $day[3];
                 case 7:
                     $timing['ВС'][0] = true;
-                    if ($day[1] == '-') {
+                    if ($day[1] == '0') {
                         $timing['ВС'][0] = false;
                     }
-                    $timing['ВС'][1] = $day[1];
-                    $timing['ВС'][2] = $day[2];
+                    $timing['ВС'][1] = $day[2];
+                    $timing['ВС'][2] = $day[3];
             }
         }
         return $timing;
@@ -94,6 +94,13 @@ class ProfileController extends Controller
         $this->checkAuth();
         $user = Auth::user()->toArray();
         $timing = $this->timing($user);
+
+        foreach ($timing as $key => $value) {
+            if ($value[1] == "-")
+                $timing[$key][1] = "";
+            if ($value[2] == "-")
+                $timing[$key][2] = "";
+        }
 
         return view('profile.edit', compact('user', 'timing'));
     }
@@ -116,7 +123,11 @@ class ProfileController extends Controller
         $timing = "";
 
         for ($i = 1; $i <= 7; $i++) {
-            $timing .= $i . ':' . $request['time:' . $i . ':1'] . ':' . $request['time:' . $i . ':2'] . ';';
+            if (isset($request['time:' . $i . ':0'])) {
+                $timing .= $i . ':1:' . $request['time:' . $i . ':1'] . ':' . $request['time:' . $i . ':2'] . ';';
+            } else {
+                $timing .= $i . ':0:' . $request['time:' . $i . ':1'] . ':' . $request['time:' . $i . ':2'] . ';';
+            }
         }
 
         $data['timing'] = $timing;
