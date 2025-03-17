@@ -14,9 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->foreignId("user_id")->constrained('users');
-            $table->foreignId("city_id");
+            $table->foreignId("city_id")->constrained('cities');
             $table->text("about");
-            $table->string("worktime")->nullable();
+            $table->string("active");
+            $table->string('timing')->nullable();
         });
     }
 

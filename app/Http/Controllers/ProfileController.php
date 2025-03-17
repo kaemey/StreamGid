@@ -19,9 +19,9 @@ class ProfileController extends Controller
         }
     }
 
-    private function timing($user)
+    private function timing($form)
     {
-        $timingData = explode(';', $user['timing']);
+        $timingData = explode(';', $form->timing);
         $timing = [];
         foreach ($timingData as $dayData) {
             $day = explode(':', $dayData);
@@ -83,17 +83,18 @@ class ProfileController extends Controller
     public function index()
     {
         $this->checkAuth();
-        $user = Auth::user()->toArray();
+        $user = Auth::user();
+        $timing = $this->timing($user->form);
 
-        $timing = $this->timing($user);
-
+        $user = $user->toArray();
         return view('profile.index', compact('user', 'timing'));
     }
     public function edit()
     {
         $this->checkAuth();
-        $user = Auth::user()->toArray();
-        $timing = $this->timing($user);
+        $user = Auth::user();
+        $form = $user->form;
+        $timing = $this->timing($form);
 
         foreach ($timing as $key => $value) {
             if ($value[1] == "-")
@@ -102,6 +103,8 @@ class ProfileController extends Controller
                 $timing[$key][2] = "";
         }
 
+        $user = $user->toArray();
+        $user['active'] = $form['active'];
         return view('profile.edit', compact('user', 'timing'));
     }
     public function update(Request $request)
@@ -112,13 +115,9 @@ class ProfileController extends Controller
             'phone' => 'required',
             'email' => 'required|email'
         ]);
+
         $user = Auth::user();
         $request = $request->toArray();
-        $data = [
-            'name' => $request['name'],
-            'phone' => $request['phone'],
-            'email' => $request['email'],
-        ];
 
         $timing = "";
 
@@ -130,9 +129,19 @@ class ProfileController extends Controller
             }
         }
 
-        $data['timing'] = $timing;
+        $active = '0';
+        if (isset($request['active']))
+            $active = '1';
 
-        User::where('id', $user->id)->update($data);
+        $userData = [
+            'name' => $request['name'],
+            'phone' => $request['phone'],
+            'email' => $request['email'],
+        ];
+
+        $user->update($userData);
+        $user->form->update(['timing' => $timing, 'active' => $active]);
+
         return redirect()->route('profile');
     }
     public function auth()

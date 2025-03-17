@@ -23,13 +23,10 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $timing = '1:' . fake()->randomFloat(0, 0, 1) . ':' . fake()->randomFloat(0, 10, 15) . ':' . fake()->randomFloat(0, 17, 22) . ';2:' . fake()->randomFloat(0, 0, 1) . ':' . fake()->randomFloat(0, 10, 15) . ':' . fake()->randomFloat(0, 17, 22) . ';3:' . fake()->randomFloat(0, 0, 1) . ':' . fake()->randomFloat(0, 10, 15) . ':' . fake()->randomFloat(0, 17, 22) . ';4:' . fake()->randomFloat(0, 0, 1) . ':' . fake()->randomFloat(0, 10, 15) . ':' . fake()->randomFloat(0, 17, 22) . ';5:' . fake()->randomFloat(0, 0, 1) . ':' . fake()->randomFloat(0, 10, 15) . ':' . fake()->randomFloat(0, 17, 22) . ';6:' . fake()->randomFloat(0, 0, 1) . ':' . fake()->randomFloat(0, 10, 15) . ':' . fake()->randomFloat(0, 17, 22) . ';7:' . fake()->randomFloat(0, 0, 1) . ':' . fake()->randomFloat(0, 10, 15) . ':' . fake()->randomFloat(0, 17, 22) . ';';
-
         return [
             'name' => fake()->name(),
             'rate' => fake()->randomFloat('1', '4', '5'),
             'isStreamer' => 'true',
-            'timing' => $timing,
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),

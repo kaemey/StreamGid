@@ -29,14 +29,18 @@ class HomeController extends Controller
         $forms = Form::all();
         $formsData = [];
         foreach ($forms as $form) {
-            $user = $form->user;
-            $formsData[] = [
-                'city' => City::find($form['city_id'])->name,
-                'photo' => $user->avatar,
-                'username' => $user->name,
-                'id' => $form->id,
-                'rate' => $user->rate
-            ];
+
+            if ($form->active == "1") {
+                $user = $form->user;
+                $formsData[] = [
+                    'city' => City::find($form['city_id'])->name,
+                    'photo' => $user->avatar,
+                    'username' => $user->name,
+                    'id' => $form->id,
+                    'rate' => $user->rate
+                ];
+            }
+
         }
 
         return view('main', compact('formsData'));
