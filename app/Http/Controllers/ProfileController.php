@@ -19,7 +19,7 @@ class ProfileController extends Controller
         }
     }
 
-    private function timing($form)
+    public static function timing($form)
     {
         $timingData = explode(';', $form->timing);
         $timing = [];
