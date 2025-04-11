@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\ProfileController;
 use App\Models\Form;
 
 class FormController extends Controller
@@ -16,7 +15,7 @@ class FormController extends Controller
         $user['about'] = $form->about;
         $user['form_id'] = $form->id;
 
-        $timing = ProfileController::timing($form);
+        $timing = timing($form);
 
         return view('form', compact('user', 'timing'));
     }
