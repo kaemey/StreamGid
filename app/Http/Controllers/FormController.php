@@ -23,7 +23,8 @@ class FormController extends Controller
     public function order($id)
     {
         $form = Form::find($id);
+        $user = $form->user;
         $timing = timing($form);
-        return view('order', compact('timing'));
+        return view('order', compact('timing', 'user'));
     }
 }

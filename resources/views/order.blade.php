@@ -8,6 +8,11 @@
 
             <table class="table" style="width:65%;">
                 <tbody>
+                    <tr>
+                        <td style="text-align: left;"><a
+                                href="{{ route('form', $user['id']) }}"><button>Вернуться</button></a></td>
+                        <td></td>
+                    </tr>
                     <form method="POST">
                         @csrf
                         <tr>
