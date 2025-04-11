@@ -13,10 +13,7 @@
                             Анкета
                         </td>
                         <td>
-                            <form method="post" action="{{ route('form', $user['form_id']) }}">
-                                @csrf
-                                <input type="submit" value="Заказать стрим">
-                            </form>
+                            <a href="{{ route('orderStream', $user['id']) }}"><button>Заказать стрим</button></a>
                         </td>
                     </tr>
                     <tr>

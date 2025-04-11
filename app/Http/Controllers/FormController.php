@@ -19,4 +19,11 @@ class FormController extends Controller
 
         return view('form', compact('user', 'timing'));
     }
+
+    public function order($id)
+    {
+        $form = Form::find($id);
+        $timing = timing($form);
+        return view('order', compact('timing'));
+    }
 }

@@ -1,4 +1,11 @@
 <?php
+
+use App\Models\Form;
+/**
+ * Возвращает массив с расписанием для отображения в фронте. Параметр App\Models\Form.
+ * @param  Illuminate\Database\Eloquent\Collection
+ * @return array
+ */
 function timing($form)
 {
     $timingData = explode(';', $form->timing);
