@@ -33,7 +33,7 @@ class ProfileController extends Controller
         $this->checkAuth();
         $user = Auth::user();
         $form = $user->form;
-        $timing = $this->timing($form);
+        $timing = timing($form);
 
         foreach ($timing as $key => $value) {
             if ($value[1] == "-")
