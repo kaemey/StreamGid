@@ -13,7 +13,13 @@
                             Анкета
                         </td>
                         <td>
-                            <a href="{{ route('orderStream', $user['id']) }}"><button>Заказать стрим</button></a>
+                            @if(Auth::check())
+                                <a href="{{ route('orderStream', $user['id']) }}"><button>Заказать стрим</button></a>
+                            @else
+                                <a href="{{ route('orderStream', $user['id']) }}"><button disabled>Заказать
+                                        стрим</button></a><br>
+                                Авторизируйтесь, чтобы заказать стрим.
+                            @endif
                         </td>
                     </tr>
                     <tr>

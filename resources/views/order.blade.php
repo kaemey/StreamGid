@@ -10,10 +10,10 @@
                 <tbody>
                     <tr>
                         <td style="text-align: left;"><a
-                                href="{{ route('form', $user['id']) }}"><button>Вернуться</button></a></td>
+                                href="{{ route('form', $streamer['id']) }}"><button>Вернуться</button></a></td>
                         <td></td>
                     </tr>
-                    <form method="POST">
+                    <form method="POST" action="{{ route("sendOrder") }}">
                         @csrf
                         <tr>
                             <td width="50%">
@@ -40,8 +40,7 @@
                                         <?php    $i++; ?>
                                     @endforeach
                                 </select>
-
-
+                                <input name="streamer_id" type="hidden" value="{{ $streamer['id'] }}">
                             </td>
                             <td></td>
                         </tr>

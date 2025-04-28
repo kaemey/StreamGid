@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Form;
+use Illuminate\Support\Facades\Auth;
 /**
  * Возвращает массив с расписанием для отображения в фронте. Параметр App\Models\Form.
  * @param  Illuminate\Database\Eloquent\Collection
@@ -65,4 +66,12 @@ function timing($form)
         }
     }
     return $timing;
+}
+
+function checkAuth()
+{
+    if (!(Auth::check())) {
+        header('Location: ' . route('home'));
+        die();
+    }
 }

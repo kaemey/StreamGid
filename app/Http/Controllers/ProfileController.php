@@ -11,17 +11,9 @@ use App\Models\User;
 class ProfileController extends Controller
 {
 
-    private function checkAuth()
-    {
-        if (!(Auth::check())) {
-            header('Location: ' . route('home'));
-            die();
-        }
-    }
-
     public function index()
     {
-        $this->checkAuth();
+        checkAuth();
         $user = Auth::user();
         $timing = timing($user->form);
 
@@ -30,7 +22,7 @@ class ProfileController extends Controller
     }
     public function edit()
     {
-        $this->checkAuth();
+        checkAuth();
         $user = Auth::user();
         $form = $user->form;
         $timing = timing($form);
@@ -48,7 +40,7 @@ class ProfileController extends Controller
     }
     public function update(Request $request)
     {
-        $this->checkAuth();
+        checkAuth();
         $request->validate([
             'name' => 'required',
             'phone' => 'required',
