@@ -23,7 +23,22 @@
                         <th>Email</th>
                         <td><input type="text" name="email" value="{{ $user['email'] }}"></td>
                     </tr>
-
+                    <tr>
+                        <th>Активировать анкету</th>
+                        <td><input type="checkbox" name="active" @if($user['active']=="1" ) checked @endif></td>
+                    </tr>
+                    <tr>
+                        <th>Расписание</th>
+                        <td>
+                            <?php $i = 1; ?>
+                            @foreach ($timing as $day => $time)
+                            <input type="checkbox" name="time:<?=$i?>:0" @if ($time[0]) checked @endif /> {{ $day }} :
+                            <input type="text" name="time:<?=$i?>:1" value="{{ $time[1] }}"> - <input type="text"
+                                name="time:<?=$i?>:2" value="{{ $time[2] }}"><br>
+                            <?php    $i += 1; ?>
+                            @endforeach
+                        </td>
+                    </tr>
                     <tr>
                         <td></td>
                         <td align="center" width="500px">

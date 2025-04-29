@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         //Create admin
         $admin->update([
             'name' => 'Макс',
+            // 'isStreamer' => '',
             'isStreamer' => 'true',
             'phone' => '+79522017630',
             'email' => "admin@mail.ru",

@@ -33,9 +33,12 @@ class FormController extends Controller
 
     public function sendOrder(Request $request)
     {
+        $data = $request->toArray();
         Order::create([
-            'streamer_id' => $request['streamer_id'],
-            'user_id' => Auth::user()->id
+            'streamer_id' => $data['streamer_id'],
+            'user_id' => Auth::user()->id,
+            'day' => $data['day'],
+            'description' => $data['description']
         ]);
         return redirect()->route('orderSuccess');
     }

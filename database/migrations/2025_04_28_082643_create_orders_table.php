@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->text("description");
+            $table->smallInteger("day");
             $table->foreignId("user_id");
             $table->foreignId("streamer_id");
         });

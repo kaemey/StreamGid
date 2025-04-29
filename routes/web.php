@@ -10,7 +10,7 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/form/{id}', [FormController::class, 'index'])->name('form');
 
 Route::get('/form/order/{id}', [FormController::class, 'order'])->name('orderStream');
-Route::get('/form/order/success', [FormController::class, 'orderSuccess'])->name('orderSuccess');
+Route::get('/order/success', [FormController::class, 'orderSuccess'])->name('orderSuccess');
 Route::post('/form/order', [FormController::class, 'sendOrder'])->name('sendOrder');
 
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
