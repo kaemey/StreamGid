@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FormController;
 
@@ -12,6 +13,8 @@ Route::get('/form/{id}', [FormController::class, 'index'])->name('form');
 Route::get('/form/order/{id}', [FormController::class, 'order'])->name('orderStream');
 Route::get('/order/success', [FormController::class, 'orderSuccess'])->name('orderSuccess');
 Route::post('/form/order', [FormController::class, 'sendOrder'])->name('sendOrder');
+
+Route::get('/order/list', action: [OrderController::class, 'orderList'])->name('orderList');
 
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
