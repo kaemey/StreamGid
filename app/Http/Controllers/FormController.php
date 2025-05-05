@@ -36,6 +36,7 @@ class FormController extends Controller
         $data = $request->toArray();
         Order::create([
             'streamer_id' => $data['streamer_id'],
+            'status' => 0,
             'user_id' => Auth::user()->id,
             'day' => $data['day'],
             'description' => $data['description']
