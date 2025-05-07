@@ -121,12 +121,26 @@ function getShortStringDay($day)
     }
 }
 
-function getStringOrderStatus($status)
+function getStringOrderStatusForUser($status)
 {
     switch ($status) {
         case 0:
-            return "Ожидает подтверждения";
+            return "Ожидает подтверждения/";
         case 1:
             return "Подтверждён. Оплатите заказ.";
+        case 2:
+            return "Отменён.";
+    }
+}
+
+function getStringOrderStatusForStreamer($status)
+{
+    switch ($status) {
+        case 0:
+            return "Ожидает подтверждения.";
+        case 1:
+            return "Подтверждён.";
+        case 2:
+            return "Отменён.";
     }
 }

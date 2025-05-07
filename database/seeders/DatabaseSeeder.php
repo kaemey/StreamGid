@@ -20,17 +20,27 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CitySeeder::class,
             FormSeeder::class,
+            OrderSeeder::class
         ]);
 
-        $admin = Form::factory()->create()->user;
-        //Create admin
-        $admin->update([
-            'name' => 'Макс',
-            // 'isStreamer' => '',
+        $streamer = Form::factory()->create()->user;
+        //Create test streamer
+        $streamer->update([
+            'name' => 'Стример',
             'isStreamer' => 'true',
-            'phone' => '+79522017630',
-            'email' => "admin@mail.ru",
-            'password' => Hash::make('admin'),
+            'phone' => '+79112223344',
+            'email' => "streamer@mail.ru",
+            'password' => Hash::make('streamer'),
+        ]);
+
+        $user = User::factory()->create();
+        //Create test user
+        $user->update([
+            'name' => 'User',
+            'isStreamer' => '',
+            'phone' => '+79223334455',
+            'email' => "user@mail.ru",
+            'password' => Hash::make('user'),
         ]);
 
     }

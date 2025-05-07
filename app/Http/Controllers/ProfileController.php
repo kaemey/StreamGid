@@ -99,7 +99,7 @@ class ProfileController extends Controller
     }
     public function upload_avatar(Request $request): RedirectResponse
     {
-        $this->checkAuth();
+        checkAuth();
         $request->validate([
             'avatar' => 'required|image',
         ]);
