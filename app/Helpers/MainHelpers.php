@@ -71,7 +71,7 @@ function timing($form)
 function checkAuth()
 {
     if (!(Auth::check())) {
-        header('Location: ' . route('home'));
+        header('Location: ' . route('auth'));
         die();
     }
 }
@@ -125,11 +125,13 @@ function getStringOrderStatusForUser($status)
 {
     switch ($status) {
         case 0:
-            return "Ожидает подтверждения/";
+            return "Ожидает подтверждения";
         case 1:
-            return "Подтверждён. Оплатите заказ.";
+            return "Подтверждён, оплатите заказ";
         case 2:
-            return "Отменён.";
+            return "Отменён стримером";
+        case 3:
+            return "Отменён вами";
     }
 }
 
@@ -137,10 +139,22 @@ function getStringOrderStatusForStreamer($status)
 {
     switch ($status) {
         case 0:
-            return "Ожидает подтверждения.";
+            return "Ожидает подтверждения";
         case 1:
-            return "Подтверждён.";
+            return "Подтверждён";
         case 2:
-            return "Отменён.";
+            return "Отменён вами";
+        case 3:
+            return "Отменён пользователем";
+    }
+}
+
+function getStringPaymentStatus($status)
+{
+    switch ($status) {
+        case 0:
+            return "Не оплачен";
+        case 1:
+            return "Оплачен";
     }
 }

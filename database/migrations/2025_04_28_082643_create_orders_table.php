@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->smallInteger("day");
             $table->foreignId("user_id");
             $table->foreignId("streamer_id");
+            $table->smallInteger("payment_status")->default(0);
         });
     }
 

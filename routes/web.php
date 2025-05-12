@@ -17,6 +17,7 @@ Route::post('/form/order', [FormController::class, 'sendOrder'])->name('sendOrde
 Route::get('/order/list', action: [OrderController::class, 'orderList'])->name('orderList');
 Route::get('/order/accept/{id}', action: [OrderController::class, 'acceptOrder'])->name('acceptOrder');
 Route::get('/order/cancel/{id}', action: [OrderController::class, 'cancelOrder'])->name('cancelOrder');
+Route::get('/order/pay_order/{id}', action: [OrderController::class, 'payOrder'])->name('payOrder');
 
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');

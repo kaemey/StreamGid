@@ -28,7 +28,9 @@ class OrderController extends Controller
                     "user_phone" => $userData->phone,
                     "day" => getStringDay($order['day']),
                     "description" => $order['description'],
-                    "status" => getStringOrderStatusForStreamer($order['status']),
+                    "status" => $order['status'],
+                    "string_status" => getStringOrderStatusForStreamer($order['status']),
+                    "payment_status_string" => getStringPaymentStatus($order['payment_status'])
                 ];
 
             }
@@ -43,11 +45,14 @@ class OrderController extends Controller
                 $streamer = User::find($order['streamer_id']);
                 $timing = timing($streamer->form);
                 $orders[] = [
+                    "id" => $order->id,
                     "streamer_name" => $streamer->name,
                     "day" => getStringDay($order['day']),
                     "time" => $timing[getShortStringDay($order['day'])],
                     "streamer_id" => $streamer->id,
-                    "status" => getStringOrderStatusForUser($order['status'])
+                    "status" => $order['status'],
+                    "string_status" => getStringOrderStatusForUser($order['status']),
+                    "payment_status_string" => getStringPaymentStatus($order['payment_status'])
                 ];
 
             }
@@ -73,6 +78,23 @@ class OrderController extends Controller
         if ($order->streamer_id == $user->id) {
             $order->update(["status" => 2]);
         }
+        if ($order->user_id == $user->id) {
+            $order->update(["status" => 3]);
+        }
         return redirect()->route("orderList");
+    }
+
+    public function payOrder($id)
+    {
+        checkAuth();
+        $user = Auth::user();
+        $order = Order::find($id);
+
+        if ($order->user_id == $user->id) {
+            return view("order.payorder");
+        } else {
+            return redirect()->route("auth");
+        }
+
     }
 }
