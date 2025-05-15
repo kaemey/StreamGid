@@ -32,7 +32,6 @@ class OrderController extends Controller
                     "string_status" => getStringOrderStatusForStreamer($order['status']),
                     "payment_status_string" => getStringPaymentStatus($order['payment_status'])
                 ];
-
             }
 
             return view('order.streamer.list', compact('orders'));

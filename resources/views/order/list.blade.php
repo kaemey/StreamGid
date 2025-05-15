@@ -34,8 +34,7 @@ th {
                 <td>{{ $order['day'] }}:
                     {{ $order['time'][1] }}-{{ $order['time'][2] }}
                 </td>
-                <td>{{ $order['string_status'] }}
-                </td>
+                <td>{{ $order['string_status'] }}</td>
                 <td>
                     @if($order['status'] == 0)
 
