@@ -35,10 +35,12 @@ $cities = City::all();
             </div>
             <div class="col text-end border" style="padding-right: 5%">
                 @if (Auth::check())
-
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <a href="{{ route('profile') }}"><img src="{{ asset('images/user.png') }}" width="48"></a>
+                    <a href="{{ route("chat_index") }}" style="margin-right: 30px"><img
+                            src="{{ asset('images/chat.png') }}" width="48"></a>
+                    <a href="{{ route('profile') }}" style="margin-right: 30px"><img
+                            src="{{ asset('images/user.png') }}" width="48"></a>
                     <button>
                         <img src="{{ asset('images/logout.png') }}" width="48" />
                     </button>

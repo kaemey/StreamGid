@@ -5,7 +5,6 @@
 @section('content')
 <div class="col border text-center">
     <div style="margin-top: 2%;">
-        Профиль
         <table class="table" style="width:50%;">
             <tbody>
                 <tr>

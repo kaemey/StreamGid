@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -25,5 +26,7 @@ Route::post('/profile', [ProfileController::class, 'upload_avatar'])->name('uplo
 
 Route::get('/auth', [ProfileController::class, 'auth'])->name('auth');
 Route::get('/reg', [ProfileController::class, 'reg'])->name('reg');
+
+Route::get('/chats', [ChatController::class, 'index'])->name('chat_index');
 
 Auth::routes();
