@@ -51,7 +51,8 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td style="text-align: left;"><button type="submit">Заказать стрим</button></td>
+                        <td style="text-align: left;"><button type="submit" class="btn btn-primary">Заказать
+                                стрим</button></td>
                         <td></td>
                     </tr>
                 </form>

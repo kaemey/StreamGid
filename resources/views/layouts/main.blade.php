@@ -70,7 +70,7 @@ $cities = City::all();
         </div>
 
         <div class="row">
-            <footer>
+            <footer style="margin-top: 2%">
                 &copy; {{ date('Y') }} Мой сайт
             </footer>
         </div>

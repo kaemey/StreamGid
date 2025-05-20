@@ -23,9 +23,9 @@ th {
 </style>
 <div class="col border">
     <div style="margin-top: 2%;">
-        <div style="margin: 2%;">
-            <h2>Список заказов</h2>
-        </div>
+
+        <h2 style="margin-bottom: 2%">Список заказов</h2>
+
         <table>
             <tr>
                 <th>Стример</th>
@@ -50,13 +50,13 @@ th {
                 <td>
                     @if($order["status"] !== 3)
                     <a href="{{ route("acceptOrder", $order['id']) }}">
-                        <button>Подтвердить</button>
+                        <button class="btn btn-primary">Подтвердить</button>
                     </a>
                     @endif
                     @if(($order["status"] == 0) or ($order["status"] == 1))
                     <br><br>
                     <a href="{{ route("cancelOrder", $order['id']) }}">
-                        <button>Отменить</button>
+                        <button class="btn btn-primary">Отменить</button>
                     </a>
                     @endif
                 </td>
