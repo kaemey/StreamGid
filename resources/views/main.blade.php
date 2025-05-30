@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="col border text-center">
-    Анкеты
+    <h2>Анкеты</h2>
     <div class="container-fluid" style="padding-top: 1%">
         <div class="row" id="anketa_list">
 

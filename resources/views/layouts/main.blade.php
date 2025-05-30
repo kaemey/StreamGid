@@ -25,9 +25,9 @@ $cities = City::all();
 
 <body>
 
-    <div class="container-fluid" style="padding: 2%;">
+    <div class="container-fluid top-nav">
         <div class="row top_nav">
-            <div class="col-1 border">
+            <div class="col-1 border text-end">
                 <img src="{{ asset('images/logo.png') }}" width="64">
             </div>
             <div class="col-2 border siteNameText">
@@ -53,7 +53,7 @@ $cities = City::all();
         </div>
     </div>
 
-    <main style="height: 500px">
+    <main>
 
         <div class="container-fluid">
             <div class="row">
@@ -63,18 +63,16 @@ $cities = City::all();
                     </div>
                     @foreach ($cities as $city)
                     <a href="{{ url("?city=" . $city['name']) }}"><button
-                            class="btn-auth">{{ $city['name'] }}</button></a></br>
+                            class="btn-city">{{ $city['name'] }}</button></a></br>
                     @endforeach
                 </div>
                 @yield('content')
             </div>
-
-        </div>
-
-        <div class="row">
-            <footer style="margin-top: 2%">
-                &copy; {{ date('Y') }} Мой сайт
-            </footer>
+            <div class="row">
+                <footer style="margin-top: 2%">
+                    &copy; {{ date('Y') }} Мой сайт
+                </footer>
+            </div>
         </div>
 
     </main>

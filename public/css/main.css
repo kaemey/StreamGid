@@ -28,3 +28,16 @@ th {
     padding: 3px;
     margin: 3px;
 }
+
+.top-nav {
+    background-color: rgb(142, 255, 255);
+    padding-top: 2%;
+    padding-bottom: 1%;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    /* Тень внизу */
+}
+
+main {
+    height: 500px;
+    margin-top: 1%;
+}
