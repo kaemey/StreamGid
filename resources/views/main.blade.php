@@ -4,51 +4,54 @@
 
 @section('content')
 
-<div class="col border text-center">
-    <h2>Анкеты</h2>
-    <div class="container-fluid" style="padding-top: 1%">
-        <div class="row" id="anketa_list">
+<div class="col-md-9">
+    <h3 class="mb-4">Анкеты</h3>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="anketa_list">
 
-            @foreach($formsData as $form)
+        @foreach($formsData as $form)
 
-            @if (isset($_GET['city']))
-            @if($form['city'] == $_GET['city'])
-            <div class="col-4 text-center anketa" data-url="{{ url('form/' . $form['id']) }}">
-                <div class="bgAnketa anketa">
+        @if (isset($_GET['city']))
+        @if($form['city'] == $_GET['city'])
+        <!-- Card -->
+        <div class="col anketa">
+            <a href="{{ url('form/' . $form['id']) }}">
+                <div class="card profile-card h-100 shadow">
                     @if(isset($form['photo']))
-                    <img src="{{ asset($form['photo']) }}" class="anketa" style="width: 256px; height: 256px;"
-                        style="margin-bottom: 4%;">
+                    <img src="{{ asset($form['photo']) }}" class="card-img-top">
                     @else
-                    <img src="{{ asset('images/image.png') }}" class="anketa" style="width: 256px; height: 256px;"
-                        style="margin-bottom: 4%;">
+                    <img src="{{ asset('images/image.png') }}" class="card-img-top">
                     @endif
-                    <br>
-                    <p class="anketa">{{ $form['username'] }} {{ $form['rate'] }} <img
-                            src="{{ asset('images/star.png') }}"></p>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $form['username'] }}<span class="rating-star"> ★
+                                {{ $form['rate'] }}</span>
+                        </h5>
+                    </div>
                 </div>
-            </div>
-            @endif
-            @else
-            <div class="col-4 text-center anketa" data-url="{{ url('form/' . $form['id']) }}">
-                <div class="bgAnketa anketa">
-                    @if(isset($form['photo']))
-                    <img src="{{ asset($form['photo']) }}" class="anketa" style="width: 256px; height: 256px;"
-                        style="margin-bottom: 4%;">
-                    @else
-                    <img src="{{ asset('images/image.png') }}" class="anketa" style="width: 256px; height: 256px;"
-                        style="margin-bottom: 4%;">
-                    @endif
-                    <br>
-                    <p class="anketa">{{ $form['username'] }} {{ $form['rate'] }} <img
-                            src="{{ asset('images/star.png') }}"></p>
-                </div>
-            </div>
-            @endif
-
-            @endforeach
-
-
+            </a>
         </div>
+        @endif
+        @else
+        <!-- Card -->
+        <div class="col anketa">
+            <a href="{{ url('form/' . $form['id']) }}">
+                <div class="card profile-card h-100 shadow">
+                    @if(isset($form['photo']))
+                    <img src="{{ asset($form['photo']) }}" class="card-img-top">
+                    @else
+                    <img src="{{ asset('images/image.png') }}" class="card-img-top">
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $form['username'] }}<span class="rating-star"> ★
+                                {{ $form['rate'] }}</span>
+                        </h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        @endif
+
+        @endforeach
+
     </div>
 </div>
 

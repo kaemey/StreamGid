@@ -2,11 +2,6 @@
     border: 1px solid;
 }
 
-.bgAnketa {
-    padding-top: 1%;
-    cursor: pointer;
-}
-
 table,
 td,
 th {
@@ -40,4 +35,21 @@ th {
 main {
     height: 500px;
     margin-top: 1%;
+}
+
+.profile-card img {
+    object-fit: cover;
+    height: 500px;
+}
+
+.anketa a {
+    text-decoration: none;
+}
+
+.rating-star {
+    color: #ffc107;
+}
+
+.auth {
+    font-size: 64px;
 }

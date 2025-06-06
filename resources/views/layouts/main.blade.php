@@ -19,66 +19,64 @@ $cities = City::all();
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('css/bootstrap.min.js') }}"></script>
+    <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
+    <script src="{{ asset('css/bootstrap.bundle.min.js') }}"></script>
 
 </head>
 
 <body>
 
-    <div class="container-fluid top-nav">
-        <div class="row top_nav">
-            <div class="col-1 border text-end">
-                <img src="{{ asset('images/logo.png') }}" width="64">
-            </div>
-            <div class="col-2 border siteNameText">
-                Stream gid
-            </div>
-            <div class="col text-end border" style="padding-right: 5%">
+    <nav class="navbar navbar-expand-lg navbar-light bg-info px-4 py-2">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="me-2" width="64">
+            <span class="text-white fw-bold fs-4">Stream gid</span>
+        </a>
+        <div class="ms-auto">
+            <div class="d-flex align-items-center gap-3 auth">
                 @if (Auth::check())
-                <form action="{{ route('logout') }}" method="POST">
+
+                <a href="{{ route('chat_index') }}" class="text-white fs-1"><i class="bi bi-chat-dots-fill"></i></a>
+                <a href="{{ route('profile') }}" class="text-white fs-1"><i class="bi bi-person-circle"></i></a>
+
+                <form action="{{ route('logout') }}" method="POST" class="d-flex align-items-center m-0 p-0">
                     @csrf
-                    <a href="{{ route("chat_index") }}" style="margin-right: 30px"><img
-                            src="{{ asset('images/chat.png') }}" width="48"></a>
-                    <a href="{{ route('profile') }}" style="margin-right: 30px"><img
-                            src="{{ asset('images/user.png') }}" width="48"></a>
-                    <button>
-                        <img src="{{ asset('images/logout.png') }}" width="48" />
-                    </button>
+                    <button type="submit" class="btn btn-link text-white fs-1 p-0 m-0"><i
+                            class="bi bi-box-arrow-right"></i></button>
                 </form>
+
                 @else
-                <a href="{{ route('auth') }}"><button class="btn-auth">Авторизация</button></a>
-                <a href="{{ route('reg') }}"> <button class="btn-auth">Регистрация</button></a>
+                <a href="{{ route('auth') }}"><button class="btn btn-outline-light me-2">Авторизация</button></a>
+                <a href="{{ route('reg') }}"> <button class="btn btn-primary">Регистрация</button></a>
                 @endif
             </div>
         </div>
-    </div>
+    </nav>
+
 
     <main>
 
-        <div class="container-fluid">
+        <div class="container-fluid mt-4">
             <div class="row">
-                <div class="col-2 text-center border cities_nav">
-                    <div style="padding-bottom: 20px">
-                        <a href="{{ url("") }}"><button class="btn-all-city">Все города</button></a></br>
+
+                <!-- Sidebar -->
+                <div class="col-md-3 mb-4">
+                    <div class="d-grid gap-2">
+
+                        <a href="{{ url("") }}" class="btn btn-warning fw-bold mb-2">Все города</a>
+                        @foreach ($cities as $city)
+                        <a href="{{ url("?city=" . $city['name']) }}" class="btn btn-primary">
+                            {{ $city['name'] }}
+                        </a>
+                        @endforeach
                     </div>
-                    @foreach ($cities as $city)
-                    <a href="{{ url("?city=" . $city['name']) }}"><button
-                            class="btn-city">{{ $city['name'] }}</button></a></br>
-                    @endforeach
                 </div>
+
                 @yield('content')
-            </div>
-            <div class="row">
-                <footer style="margin-top: 2%">
-                    &copy; {{ date('Y') }} Мой сайт
-                </footer>
+
             </div>
         </div>
 
     </main>
-
-
-
 
     <script src="{{ asset('js/main.js') }}"></script>
 </body>

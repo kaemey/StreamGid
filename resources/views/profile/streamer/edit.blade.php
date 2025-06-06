@@ -1,56 +1,96 @@
 @extends('layouts.main')
 
-@section('title', 'Главная страница')
+@section('title', 'Редактирование профиля стримера')
 
 @section('content')
-<div class="col border text-center">
-    <div style="margin-top: 2%;">
-        Профиль
-        <table class="table" style="width:50%;">
-            <form action="{{ route("profile.update") }}" method="post">
-                @csrf
-                <tbody>
+<div class="col-md-9">
+    <div class="card shadow-lg border-0 p-4" style="background: linear-gradient(145deg, #f0f8ff, #e6f0ff);">
+        <h2 class="text-primary mb-4">
+            <i class="bi bi-pencil-square me-2"></i>Редактирование профиля стримера
+        </h2>
 
+        <form action="{{ route('profile.update') }}" method="POST">
+            @csrf
+            <table class="table table-borderless text-dark">
+                <tbody>
                     <tr>
-                        <th>Имя</th>
-                        <td><input type="text" class="form-control" name="name" value="{{ $user['name'] }}"></td>
-                    </tr>
-                    <tr>
-                        <th>Телефон</th>
-                        <td><input type="text" class="form-control" name="phone" value="{{ $user['phone'] }}"></td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td><input type="text" class="form-control" name="email" value="{{ $user['email'] }}"></td>
-                    </tr>
-                    <tr>
-                        <th>Активировать анкету</th>
-                        <td><input type="checkbox" name="active" @if($user['active']=="1" ) checked @endif></td>
-                    </tr>
-                    <tr>
-                        <th>Расписание</th>
+                        <th style="width: 25%;">
+                            <i class="bi bi-person-fill me-2 text-info"></i>Имя
+                        </th>
                         <td>
-                            <?php $i = 1; ?>
-                            @foreach ($timing as $day => $time)
-                            <input type="checkbox" name="time:<?=$i?>:0" @if ($time[0]) checked @endif /> {{ $day }} :
-                            <input type="text" name="time:<?=$i?>:1" value="{{ $time[1] }}"> - <input type="text"
-                                name="time:<?=$i?>:2" value="{{ $time[2] }}"><br>
-                            <?php    $i += 1; ?>
-                            @endforeach
+                            <input type="text" class="form-control" name="name" value="{{ $user['name'] }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="bi bi-telephone-fill me-2 text-info"></i>Телефон
+                        </th>
+                        <td>
+                            <input type="text" class="form-control" name="phone" value="{{ $user['phone'] }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="bi bi-envelope-fill me-2 text-info"></i>Email
+                        </th>
+                        <td>
+                            <input type="text" class="form-control" name="email" value="{{ $user['email'] }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="bi bi-toggle-on me-2 text-info"></i>Активировать анкету
+                        </th>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" name="active" id="activeSwitch"
+                                    @if($user['active']=="1" ) checked @endif>
+                                <label class="form-check-label" for="activeSwitch">Видим для заказчиков</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="bi bi-calendar-week me-2 text-info"></i>Расписание
+                        </th>
+                        <td>
+                            <div class="row">
+                                @php $i = 1; @endphp
+                                @foreach ($timing as $day => $time)
+                                <div class="col-md-6 mb-2">
+                                    <div class="border p-3 rounded shadow-sm bg-white">
+                                        <div class="form-check mb-2">
+                                            <input type="checkbox" class="form-check-input" id="day-{{ $i }}"
+                                                name="time:{{ $i }}:0" @if ($time[0]) checked @endif>
+                                            <label class="form-check-label fw-bold"
+                                                for="day-{{ $i }}">{{ $day }}</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-text">с</span>
+                                            <input type="text" name="time:{{ $i }}:1" value="{{ $time[1] }}"
+                                                class="form-control">
+                                            <span class="input-group-text">до</span>
+                                            <input type="text" name="time:{{ $i }}:2" value="{{ $time[2] }}"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                @php $i++; @endphp
+                                @endforeach
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td align="center" width="500px">
-
-                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-
+                        <td class="text-end">
+                            <button type="submit" class="btn btn-outline-success px-4">
+                                <i class="bi bi-save me-1"></i>Сохранить изменения
+                            </button>
                         </td>
                     </tr>
-            </form>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </form>
     </div>
 </div>
-
 @endsection

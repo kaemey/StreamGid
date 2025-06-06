@@ -1,74 +1,61 @@
 @extends('layouts.main')
 
-@section('title', 'Анкета')
+@section('title', 'Список заказов стримера')
 
 @section('content')
-<style>
-table,
-td,
-th {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 15px;
-}
+<div class="col-md-9">
+    <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-primary text-white text-center rounded-top-4">
+            <h4 class="my-2">Список заказов</h4>
+        </div>
+        <div class="card-body p-4">
 
-td,
-th {
-    text-align: left;
-}
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Пользователь</th>
+                            <th>Дата</th>
+                            <th>Телефон</th>
+                            <th>Описание</th>
+                            <th>Действия</th>
+                            <th>Статус</th>
+                            <th>Оплата</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($orders as $order)
+                        <tr>
+                            <td>{{ $order['user_name'] }}</td>
+                            <td>{{ $order['day'] }}</td>
+                            <td>{{ $order['user_phone'] }}</td>
+                            <td class="text-start" style="max-width: 300px;">{{ $order['description'] }}</td>
+                            <td>
+                                <div class="d-flex flex-column gap-2">
+                                    @if($order['status'] !== 3)
+                                    <a href="{{ route('acceptOrder', $order['id']) }}"
+                                        class="btn btn-success btn-sm">Подтвердить</a>
+                                    @endif
 
-.order_description {
-    max-width: 300px;
-}
-</style>
-<div class="col border">
-    <div style="margin-top: 2%;">
+                                    @if(in_array($order['status'], [0, 1]))
+                                    <a href="{{ route('cancelOrder', $order['id']) }}"
+                                        class="btn btn-outline-danger btn-sm">Отменить</a>
+                                    @endif
+                                </div>
+                            </td>
+                            <td>{{ $order['string_status'] }}</td>
+                            <td>{{ $order['payment_status_string'] }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-muted">Заказов пока нет</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
 
-        <h2 style="margin-bottom: 2%">Список заказов</h2>
-
-        <table>
-            <tr>
-                <th>Стример</th>
-                <th>Дата</th>
-                <th>Телефон</th>
-                <th>Описание</th>
-                <th></th>
-                <th>Статус заказа</th>
-                <th>Статус оплаты</th>
-
-            </tr>
-            @foreach ($orders as $order)
-            <tr>
-                <td>{{ $order['user_name'] }}</td>
-
-
-                <td>{{ $order['day'] }}
-                </td>
-                <td>{{ $order['user_phone'] }}</td>
-                <td class="order_description">{{ $order['description'] }}
-                </td>
-                <td>
-                    @if($order["status"] !== 3)
-                    <a href="{{ route("acceptOrder", $order['id']) }}">
-                        <button class="btn btn-primary">Подтвердить</button>
-                    </a>
-                    @endif
-                    @if(($order["status"] == 0) or ($order["status"] == 1))
-                    <br><br>
-                    <a href="{{ route("cancelOrder", $order['id']) }}">
-                        <button class="btn btn-primary">Отменить</button>
-                    </a>
-                    @endif
-                </td>
-                <td>{{ $order['string_status'] }}</td>
-                <td>
-                    {{ $order["payment_status_string"] }}
-                </td>
-
-            </tr>
-            @endforeach
-        </table>
+        </div>
     </div>
 </div>
-
 @endsection
