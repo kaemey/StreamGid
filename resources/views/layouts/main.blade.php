@@ -27,26 +27,24 @@ $cities = City::all();
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-info px-4 py-2">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center" href="/">
             <img src="{{ asset('images/logo.png') }}" alt="Logo" class="me-2" width="64">
             <span class="text-white fw-bold fs-4">Stream gid</span>
         </a>
         <div class="ms-auto">
             <div class="d-flex align-items-center gap-3 auth">
                 @if (Auth::check())
+                    <a href="{{ route('chat_index') }}" class="text-white fs-1"><i class="bi bi-chat-dots-fill"></i></a>
+                    <a href="{{ route('profile') }}" class="text-white fs-1"><i class="bi bi-person-circle"></i></a>
 
-                <a href="{{ route('chat_index') }}" class="text-white fs-1"><i class="bi bi-chat-dots-fill"></i></a>
-                <a href="{{ route('profile') }}" class="text-white fs-1"><i class="bi bi-person-circle"></i></a>
-
-                <form action="{{ route('logout') }}" method="POST" class="d-flex align-items-center m-0 p-0">
-                    @csrf
-                    <button type="submit" class="btn btn-link text-white fs-1 p-0 m-0"><i
-                            class="bi bi-box-arrow-right"></i></button>
-                </form>
-
+                    <form action="{{ route('logout') }}" method="POST" class="d-flex align-items-center m-0 p-0">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-white fs-1 p-0 m-0"><i
+                                class="bi bi-box-arrow-right"></i></button>
+                    </form>
                 @else
-                <a href="{{ route('auth') }}"><button class="btn btn-outline-light me-2">Авторизация</button></a>
-                <a href="{{ route('reg') }}"> <button class="btn btn-primary">Регистрация</button></a>
+                    <a href="{{ route('auth') }}"><button class="btn btn-outline-light me-2">Авторизация</button></a>
+                    <a href="{{ route('reg') }}"> <button class="btn btn-primary">Регистрация</button></a>
                 @endif
             </div>
         </div>
@@ -62,11 +60,11 @@ $cities = City::all();
                 <div class="col-md-3 mb-4">
                     <div class="d-grid gap-2">
 
-                        <a href="{{ url("") }}" class="btn btn-warning fw-bold mb-2">Все города</a>
+                        <a href="{{ url('') }}" class="btn btn-warning fw-bold mb-2">Все города</a>
                         @foreach ($cities as $city)
-                        <a href="{{ url("?city=" . $city['name']) }}" class="btn btn-primary">
-                            {{ $city['name'] }}
-                        </a>
+                            <a href="{{ url('?city=' . $city['name']) }}" class="btn btn-primary">
+                                {{ $city['name'] }}
+                            </a>
                         @endforeach
                     </div>
                 </div>
@@ -77,6 +75,21 @@ $cities = City::all();
         </div>
 
     </main>
+
+    <footer class="bg-info text-white text-center py-4 mt-5 shadow-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-md-start mb-2 mb-md-0">
+                    <p class="mb-0">© {{ date('Y') }} Stream gid. Все права защищены.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3 text-decoration-none">Политика конфиденциальности</a>
+                    <a href="#" class="text-white text-decoration-none">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 
     <script src="{{ asset('js/main.js') }}"></script>
 </body>

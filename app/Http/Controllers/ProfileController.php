@@ -104,7 +104,7 @@ class ProfileController extends Controller
             'avatar' => 'required|image',
         ]);
         $userData = Auth::user();
-        $imageName = $userData['id'] . '.' . $request->avatar->extension();
+        $imageName = $userData['id'] . '.jpg';
         $request->avatar->move(public_path('storage/avatars/'), $imageName);
         User::where('id', $userData['id'])->update(['avatar' => 'storage/avatars/' . $userData['id'] . '.jpg']);
 
