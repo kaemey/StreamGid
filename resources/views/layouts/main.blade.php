@@ -26,8 +26,8 @@ $cities = City::all();
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-info px-4 py-2">
-        <a class="navbar-brand d-flex align-items-center" href="/">
+    <nav class="navbar navbar-expand-lg navbar px-4 py-2">
+        <a class="navbar-brand navbar-expand-lg px-4 py-3 d-flex align-items-center" href="/">
             <img src="{{ asset('images/logo.png') }}" alt="Logo" class="me-2" width="64">
             <span class="text-white fw-bold fs-4">Stream gid</span>
         </a>
@@ -60,12 +60,16 @@ $cities = City::all();
                 <div class="col-md-3 mb-4">
                     <div class="d-grid gap-2">
 
-                        <a href="{{ url('') }}" class="btn btn-warning fw-bold mb-2">Все города</a>
+                        <a href="{{ url('') }}" class="btn btn-warning fw-bold mb-3 shadow-sm">
+                            <i class="bi bi-globe2 me-2"></i>Все города
+                        </a>
+
                         @foreach ($cities as $city)
-                            <a href="{{ url('?city=' . $city['name']) }}" class="btn btn-primary">
-                                {{ $city['name'] }}
+                            <a href="{{ url('?city=' . $city['name']) }}" class="city-button mb-2">
+                                <i class="bi bi-geo-alt-fill"></i> {{ $city['name'] }}
                             </a>
                         @endforeach
+
                     </div>
                 </div>
 
@@ -76,16 +80,18 @@ $cities = City::all();
 
     </main>
 
-    <footer class="bg-info text-white text-center py-4 mt-5 shadow-sm">
+    <footer class="text-center py-4 shadow-sm">
+
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-md-start mb-2 mb-md-0">
                     <p class="mb-0">© {{ date('Y') }} Stream gid. Все права защищены.</p>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-white me-3 text-decoration-none">Политика конфиденциальности</a>
-                    <a href="#" class="text-white text-decoration-none">Контакты</a>
+                <div class="col-md-6 text-md-end footer-links">
+                    <a href="#"><i class="bi bi-shield-lock"></i> Политика</a>
+                    <a href="#"><i class="bi bi-envelope"></i> Контакты</a>
                 </div>
+
             </div>
         </div>
     </footer>
