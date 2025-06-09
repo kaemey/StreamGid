@@ -43,6 +43,7 @@ class ProfileController extends Controller
 
             $user = $user->toArray();
             $user['active'] = $form['active'];
+            $user["categories"] = explode(",", $form["categories"]);
             return view('profile.streamer.edit', compact('user', 'timing'));
         } else {
             return view('profile.edit', compact('user'));
@@ -62,6 +63,7 @@ class ProfileController extends Controller
         $request = $request->toArray();
 
         if ($user->isStreamer == "true") {
+            //Обновление расписания
             $timing = "";
 
             for ($i = 1; $i <= 7; $i++) {
@@ -77,6 +79,8 @@ class ProfileController extends Controller
                 $active = '1';
 
             $user->form->update(['timing' => $timing, 'active' => $active]);
+            //Обновление категорий
+            $user->form->update(["categories" => implode(",", $request["categories"])]);
         }
 
         $userData = [

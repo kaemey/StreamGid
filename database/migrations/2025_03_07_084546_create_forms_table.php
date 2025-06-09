@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->foreignId("city_id")->constrained('cities');
             $table->text("about");
             $table->string("active");
+            $table->string("categories")->nullable();
             $table->string('timing')->nullable();
         });
     }

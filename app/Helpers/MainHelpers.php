@@ -158,3 +158,32 @@ function getStringPaymentStatus($status)
             return "Оплачен";
     }
 }
+
+function getCategoryAsString($category)
+{
+
+    switch ($category) {
+        case 0:
+            return "Архитектура и достопримечательности";
+        case 1:
+            return "Местная кухня и кафе";
+        case 2:
+            return "Повседневная жизнь";
+        case 3:
+            return "Природа и парки";
+        case 4:
+            return "Транспорт и инфраструктура";
+        case 5:
+            return "Современное искусство и культура";
+        case 6:
+            return "Ночные развлечения";
+        case 7:
+            return "Пляжи и набережные";
+    }
+
+}
+
+function getCategoryCount()
+{
+    return 8;
+}

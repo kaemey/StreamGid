@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->float('rate')->nullable();
+            $table->string('categories')->nullable();
             $table->string('phone')->unique();
             $table->string('avatar')->nullable();
             $table->string('isStreamer');
