@@ -16,6 +16,7 @@ class FormController extends Controller
         $user = $form->user->toArray();
         $user['about'] = $form->about;
         $user['form_id'] = $form->id;
+        $user['categories'] = explode(",", $form->categories);
 
         $timing = timing($form);
 

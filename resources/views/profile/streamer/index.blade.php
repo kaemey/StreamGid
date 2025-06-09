@@ -5,11 +5,20 @@
 @section('content')
     <div class="col-md-9">
         <div class="card shadow-lg border-0 p-4" style="background: linear-gradient(145deg, #f0f8ff, #e6f0ff);">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="text-primary"><i class="bi bi-person-badge-fill me-2"></i>Профиль стримера</h2>
+            <h2 class="text-primary mb-3">
+                <i class="bi bi-person-badge-fill me-2"></i>Профиль стримера
+            </h2>
+
+            <div class="mb-4 d-flex gap-3 flex-wrap">
                 <a href="{{ route('orderList') }}" class="btn btn-success shadow-sm">
                     <i class="bi bi-list-check me-1"></i>Список заказов
                 </a>
+
+                <form action="{{ route('profile.edit') }}" method="get">
+                    <button type="submit" class="btn btn-outline-primary shadow-sm">
+                        <i class="bi bi-pencil-square me-1"></i>Редактировать профиль
+                    </button>
+                </form>
             </div>
 
             <table class="table table-borderless text-dark">
@@ -44,37 +53,46 @@
                                         accept="image/*">
                                 </div>
                             </form>
+                            {{-- Категории --}}
+                            <div class="d-flex flex-column gap-2">
+                                <div class="fw-semibold text-secondary"><i class="bi bi-tags-fill me-1"></i>Категории:
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @for ($i = 0; $i < getCategoryCount(); $i++)
+                                        <span class="badge rounded-pill px-3 py-2 shadow-sm fw-semibold"
+                                            style="
+        background-color: {{ in_array($i, $user['categories']) ? '#0d6efd' : '#dc3545' }};
+        color: white;
+        font-size: 0.95rem;
+    ">
+                                            {{ getCategoryAsString($i) }}
+                                        </span>
+                                    @endfor
+                                </div>
+                            </div>
                         </td>
+
                     </tr>
                     <tr>
                         <th><i class="bi bi-calendar-week-fill me-2 text-info"></i>Расписание</th>
                         <td>
-                            <div class="row">
+                            <div class="d-flex flex-wrap justify-content-start gap-2">
                                 @foreach ($timing as $day => $time)
-                                    <div class="col-md-6 mb-2">
-                                        <span class="badge bg-{{ $time[0] ? 'success' : 'secondary' }} p-2 fs-6 shadow-sm">
-                                            <strong>{{ $day }}:</strong>
-                                            @if ($time[0])
-                                                {{ $time[1] }} - {{ $time[2] }}
-                                            @else
-                                                неактивен
-                                            @endif
-                                        </span>
+                                    <div class="text-center border rounded shadow-sm px-2 py-1"
+                                        style="min-width: 110px;
+                           background-color: {{ $time[0] ? '#d1e7dd' : '#f8d7da' }};">
+                                        <div class="fw-bold">{{ $day }}</div>
+                                        @if ($time[0])
+                                            <small class="text-success">{{ $time[1] }} – {{ $time[2] }}</small>
+                                        @else
+                                            <small class="text-danger">неактивен</small>
+                                        @endif
                                     </div>
                                 @endforeach
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <form action="{{ route('profile.edit') }}" method="get">
-                                <button type="submit" class="btn btn-outline-primary">
-                                    <i class="bi bi-pencil-square me-1"></i>Редактировать профиль
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -92,7 +110,7 @@
             input.addEventListener("change", () => {
                 if (input.files.length > 0) {
                     previewImage(input.files[0]);
-                    form.submit(); // 🔥 Автоматическая отправка
+                    form.submit();
                 }
             });
 
@@ -112,7 +130,7 @@
                 if (e.dataTransfer.files.length > 0) {
                     input.files = e.dataTransfer.files;
                     previewImage(e.dataTransfer.files[0]);
-                    form.submit(); // 🔥 Автоматическая отправка
+                    form.submit();
                 }
             });
 
@@ -125,5 +143,4 @@
             }
         });
     </script>
-
 @endsection

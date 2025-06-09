@@ -55,6 +55,7 @@
                                                 <label class="form-check-label" for="cat-{{ $i }}">
                                                     {{ getCategoryAsString($i) }}
                                                 </label>
+
                                             </div>
                                         @endfor
                                     </div>

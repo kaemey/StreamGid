@@ -17,7 +17,9 @@ class ProfileController extends Controller
         $user = Auth::user();
         if ($user->isStreamer == "true") {
             $timing = timing($user->form);
+            $categories = explode(",", $user->form->categories);
             $user = $user->toArray();
+            $user["categories"] = $categories;
             return view('profile.streamer.index', compact('user', 'timing'));
         } else {
             $user = $user->toArray();
