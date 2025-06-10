@@ -12,10 +12,16 @@ return new class extends Migration {
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('chat_id'); // Ссылка на чат
+            $table->unsignedBigInteger('from_id');  // Кто отправил
+            $table->text('text');                  // Текст сообщения
             $table->timestamps();
-            $table->foreignId("from_id");
-            $table->foreignId("to_id");
-            $table->text("text");
+
+            // Связь с чатом
+            $table->foreign('chat_id')->references('id')->on('chats')->onDelete('cascade');
+
+            // Кто отправил
+            $table->foreign('from_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

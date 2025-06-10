@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ChatController;
+use App\Models\Message;
 
 class OrderController extends Controller
 {
@@ -57,6 +59,30 @@ class OrderController extends Controller
             }
             return view('order.list', compact('orders'));
         }
+    }
+
+    public function sendOrder(Request $request)
+    {
+        $data = $request->toArray();
+        Order::create([
+            'streamer_id' => $data['streamer_id'],
+            'status' => 0,
+            'user_id' => Auth::user()->id,
+            'day' => $data['day'],
+            'description' => $data['description']
+        ]);
+
+        // Создаем чат между пользователем 1 и 2
+        $chat = ChatController::getOrCreateChat(Auth::user()->id, $data['streamer_id']);
+
+        // Отправляем сообщение
+        Message::create([
+            'chat_id' => $chat->id,
+            'from_id' => 1,
+            'text' => 'Привет!',
+        ]);
+
+        return redirect()->route('orderSuccess');
     }
 
     public function acceptOrder($id)

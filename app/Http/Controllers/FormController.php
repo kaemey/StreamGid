@@ -32,19 +32,6 @@ class FormController extends Controller
         return view('order', compact('timing', 'streamer'));
     }
 
-    public function sendOrder(Request $request)
-    {
-        $data = $request->toArray();
-        Order::create([
-            'streamer_id' => $data['streamer_id'],
-            'status' => 0,
-            'user_id' => Auth::user()->id,
-            'day' => $data['day'],
-            'description' => $data['description']
-        ]);
-        return redirect()->route('orderSuccess');
-    }
-
     public function orderSuccess()
     {
         return view('ordersuccess');

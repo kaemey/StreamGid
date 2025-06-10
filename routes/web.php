@@ -13,7 +13,7 @@ Route::get('/form/{id}', [FormController::class, 'index'])->name('form');
 
 Route::get('/form/order/{id}', [FormController::class, 'order'])->name('orderStream');
 Route::get('/order/success', [FormController::class, 'orderSuccess'])->name('orderSuccess');
-Route::post('/form/order', [FormController::class, 'sendOrder'])->name('sendOrder');
+Route::post('/form/order', [OrderController::class, 'sendOrder'])->name('sendOrder');
 
 Route::get('/order/list', action: [OrderController::class, 'orderList'])->name('orderList');
 Route::get('/order/accept/{id}', action: [OrderController::class, 'acceptOrder'])->name('acceptOrder');
@@ -28,5 +28,7 @@ Route::get('/auth', [ProfileController::class, 'auth'])->name('auth');
 Route::get('/reg', [ProfileController::class, 'reg'])->name('reg');
 
 Route::get('/chats', [ChatController::class, 'index'])->name('chat_index');
+Route::get('/chats/{id}', [ChatController::class, 'show'])->name('chat_show');
+
 
 Auth::routes();

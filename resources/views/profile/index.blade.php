@@ -4,57 +4,61 @@
 
 @section('content')
     <div class="col-md-9 mx-auto">
-        <div class="card shadow-lg mt-4">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">Профиль</h4>
-                <a href="{{ route('orderList') }}" class="btn btn-light btn-sm">Список заказов</a>
+        <div class="card shadow-lg border-0 p-4" style="background: linear-gradient(145deg, #f0f8ff, #e6f0ff);">
+            <h2 class="text-primary mb-3">
+                <i class="bi bi-person-badge-fill me-2"></i>Профиль
+            </h2>
+
+            <div class="mb-4 d-flex gap-3 flex-wrap">
+                <a href="{{ route('orderList') }}" class="btn btn-success shadow-sm">
+                    <i class="bi bi-list-check me-1"></i>Список заказов
+                </a>
+
+                <form action="{{ route('profile.edit') }}" method="get">
+                    <button type="submit" class="btn btn-outline-primary shadow-sm">
+                        <i class="bi bi-pencil-square me-1"></i>Редактировать профиль
+                    </button>
+                </form>
             </div>
-            <div class="card-body">
-                <div class="row mb-3">
-
-                    <div class="col-md-4 text-center">
-                        @if (isset($user['avatar']))
-                            <img id="avatar-preview" src="{{ asset($user['avatar']) }}" alt="Avatar"
-                                class="img-fluid rounded-circle mb-3" style="max-width: 200px;">
-                        @else
-                            <img id="avatar-preview" src="{{ asset('images/image.png') }}" alt="Default Avatar"
-                                class="img-fluid rounded-circle mb-3" style="max-width: 200px;">
-                        @endif
-
-                        <form enctype="multipart/form-data" method="POST" action="{{ route('upload_avatar') }}"
-                            id="avatar-form">
-                            @csrf
-                            <div id="drop-zone" class="border border-primary rounded p-3 text-center mb-2"
-                                style="cursor: pointer;">
-                                <p class="text-muted mb-1">Перетащите изображение сюда или кликните</p>
-                                <input type="file" name="avatar" id="avatar-input" class="form-control d-none"
-                                    accept="image/*">
+            <table class="table table-borderless text-dark">
+                <tbody>
+                    <tr>
+                        <th style="width: 25%;"><i class="bi bi-person-fill me-2 text-info"></i>Имя</th>
+                        <td class="fw-semibold">{{ $user['name'] }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="bi bi-telephone-fill me-2 text-info"></i>Телефон</th>
+                        <td>{{ $user['phone'] }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="bi bi-envelope-fill me-2 text-info"></i>Email</th>
+                        <td>{{ $user['email'] }}</td>
+                    </tr>
+                    <tr>
+                        <th><i class="bi bi-image-fill me-2 text-info"></i>Аватар</th>
+                        <td>
+                            <div class="mb-3">
+                                <img id="avatar-preview" src="{{ asset($user['avatar'] ?? 'images/image.png') }}"
+                                    alt="Аватар" class="img-thumbnail rounded shadow-sm"
+                                    style="max-width: 200px; border: 2px solid #007bff;">
                             </div>
-                        </form>
-                    </div>
+                            <form enctype="multipart/form-data" method="POST" action="{{ route('upload_avatar') }}"
+                                id="avatar-form">
+                                @csrf
+                                <div id="drop-zone" class="border border-primary rounded p-3 text-center mb-2"
+                                    style="cursor: pointer;">
+                                    <p class="text-muted mb-1">Перетащите изображение сюда или кликните</p>
+                                    <input type="file" name="avatar" id="avatar-input" class="form-control d-none"
+                                        accept="image/*">
+                                </div>
+                            </form>
+                        </td>
 
-                    <div class="col-md-8">
-                        <table class="table table-borderless">
-                            <tr>
-                                <th class="w-25">Имя:</th>
-                                <td>{{ $user['name'] }}</td>
-                            </tr>
-                            <tr>
-                                <th>Телефон:</th>
-                                <td>{{ $user['phone'] }}</td>
-                            </tr>
-                            <tr>
-                                <th>Email:</th>
-                                <td>{{ $user['email'] }}</td>
-                            </tr>
-                        </table>
+                    </tr>
 
-                        <form action="{{ route('profile.edit') }}" method="get" class="mt-3">
-                            <button type="submit" class="btn btn-primary">Редактировать профиль</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
+                </tbody>
+            </table>
         </div>
     </div>
 
