@@ -12,24 +12,15 @@ class ChatController extends Controller
 {
     public function index()
     {
-        $messages = Message::where(["from_id" => Auth::user()->id])->get()->toArray();
+        checkAuth();
+        $userId = auth()->id();
 
-        $chats = [];
+        $chats = Chat::where('user1_id', $userId)
+            ->orWhere('user2_id', $userId)
+            ->with(['lastMessage'])
+            ->get();
 
-        foreach ($messages as $message) {
-            if (in_array($message["from_id"], $chats) == false) {
-
-                $user = User::find($message["from_id"]);
-
-                $chats[] = [
-                    "from_id" => $user->id,
-                    "name" => $user->name,
-                    "avatar" => $user->avatar,
-                ];
-            }
-        }
-
-        return view('chat.index', compact("chats"));
+        return view('chat.index', compact('chats', 'userId'));
     }
 
     public static function getOrCreateChat($userId1, $userId2)

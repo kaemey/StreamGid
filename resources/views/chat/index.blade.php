@@ -81,19 +81,35 @@
         }
     </style>
 
+    @php
+        use App\Models\User;
+    @endphp
+
     <div class="col-md-9">
         <div class="chat-list">
             @if (count($chats) > 0)
                 @foreach ($chats as $chat)
-                    <a href="{{ route('chat_show', ['id' => $chat['from_id']]) }}" class="text-decoration-none">
+                    @php
+                        // Определяем собеседника
+                        $otherUserId = $chat->user1_id == $userId ? $chat->user2_id : $chat->user1_id;
+                        $otherUser = User::find($otherUserId);
+
+                        // Последнее сообщение в чате
+                        $lastMessage = $chat->lastMessage;
+                    @endphp
+
+                    <a href="{{ route('chat_show', ['id' => $chat['id']]) }}" class="text-decoration-none">
                         <div class="chat-item">
-                            <img src="{{ $chat['avatar'] }}" alt="Аватар" class="chat-avatar">
+                            <img src="{{ $otherUser->avatar }}" alt="Аватар" class="chat-avatar">
                             <div class="chat-info">
-                                <div class="chat-name">{{ $chat['name'] }}</div>
-                                <div class="chat-preview">{{ $chat['last_message'] ?? 'Нет сообщений' }}</div>
+                                {{-- Имя собеседника --}}
+                                <div class="chat-name"> {{ $otherUser->name }}</div>
+                                {{-- Имя отправившего последнее сообщение: последнее сообщение --}}
+                                <div class="chat-preview">{{ User::find($lastMessage->from_id)->name }}:
+                                    {{ $lastMessage->text }}</div>
                             </div>
                             <div class="chat-time">
-                                {{ $chat['last_message_time'] ?? '' }}
+                                {{ $lastMessage->created_at->format('Y-m-d H:i') }}
                             </div>
                         </div>
                     </a>

@@ -72,14 +72,17 @@ class OrderController extends Controller
             'description' => $data['description']
         ]);
 
+        $userId = Auth::user()->id;
+
         // Создаем чат между пользователем 1 и 2
-        $chat = ChatController::getOrCreateChat(Auth::user()->id, $data['streamer_id']);
+        $chat = ChatController::getOrCreateChat($userId, $data['streamer_id']);
 
         // Отправляем сообщение
         Message::create([
             'chat_id' => $chat->id,
-            'from_id' => 1,
-            'text' => 'Привет!',
+            'from_id' => $userId,
+            'to_id' => $data['streamer_id'],
+            'text' => 'Добрый день! Я заказал у вас стрим!',
         ]);
 
         return redirect()->route('orderSuccess');

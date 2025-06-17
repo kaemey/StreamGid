@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('chat_id'); // Ссылка на чат
             $table->unsignedBigInteger('from_id');  // Кто отправил
+            $table->unsignedBigInteger('to_id');  // Кому отправили
             $table->text('text');                  // Текст сообщения
             $table->timestamps();
 
