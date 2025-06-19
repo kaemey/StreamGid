@@ -1,0 +1,19 @@
+{
+    "name": "Stream gid",
+    "short_name": "Stream gid",
+    "icons": [
+        {
+            "src": "/images/favicon.ico",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ],
+    "background_color": "#ffffff",
+    "theme_color": "#0d6efd",
+    "display": "standalone"
+}

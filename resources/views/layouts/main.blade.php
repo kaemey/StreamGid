@@ -21,7 +21,7 @@ $cities = City::all();
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-icons.css') }}" rel="stylesheet">
     <script src="{{ asset('css/bootstrap.bundle.min.js') }}"></script>
-
+    @yield('header')
 </head>
 
 <body>
@@ -58,18 +58,19 @@ $cities = City::all();
 
                 <!-- Sidebar -->
                 <div class="col-md-3 mb-4">
-                    <div class="d-grid gap-2">
-
-                        <a href="{{ url('') }}" class="btn btn-warning fw-bold mb-3 shadow-sm">
+                    <div class="city-scroll p-2 shadow-sm rounded bg-light">
+                        <a href="{{ url('') }}" class="btn btn-warning fw-bold mb-3 shadow-sm w-100">
                             <i class="bi bi-globe2 me-2"></i>Все города
                         </a>
 
-                        @foreach ($cities as $city)
-                            <a href="{{ url('?city=' . $city['name']) }}" class="city-button mb-2">
-                                <i class="bi bi-geo-alt-fill"></i> {{ $city['name'] }}
-                            </a>
-                        @endforeach
-
+                        <div class="d-grid gap-2">
+                            @foreach ($cities as $city)
+                                <a href="{{ url('?city=' . $city['name']) }}"
+                                    class="city-button btn btn-outline-primary text-start">
+                                    <i class="bi bi-geo-alt-fill me-1"></i>{{ $city['name'] }}
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 

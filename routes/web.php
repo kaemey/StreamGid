@@ -29,6 +29,6 @@ Route::get('/reg', [ProfileController::class, 'reg'])->name('reg');
 
 Route::get('/chats', [ChatController::class, 'index'])->name('chat_index');
 Route::get('/chats/{id}', [ChatController::class, 'show'])->name('chat_show');
-
+Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 
 Auth::routes();

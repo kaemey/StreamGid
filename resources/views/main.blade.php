@@ -4,55 +4,79 @@
 
 @section('content')
 
-<div class="col-md-9">
-    <h3 class="mb-4">Анкеты</h3>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="anketa_list">
+    <div class="col-md-9">
+        <h3 class="mb-4">Анкеты</h3>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="anketa_list">
 
-        @foreach($formsData as $form)
+            @foreach ($formsData as $form)
 
-        @if (isset($_GET['city']))
-        @if($form['city'] == $_GET['city'])
-        <!-- Card -->
-        <div class="col anketa">
-            <a href="{{ url('form/' . $form['id']) }}">
-                <div class="card profile-card h-100 shadow">
-                    @if(isset($form['photo']))
-                    <img src="{{ asset($form['photo']) }}" class="card-img-top">
-                    @else
-                    <img src="{{ asset('images/image.png') }}" class="card-img-top">
+                @if (isset($_GET['city']))
+                    @if ($form['city'] == $_GET['city'])
+                        <!-- Card -->
+                        <div class="col anketa">
+                            <a href="{{ url('form/' . $form['id']) }}">
+                                <div class="card profile-card h-100 shadow">
+                                    @if (isset($form['photo']))
+                                        <img src="{{ asset($form['photo']) }}" class="card-img-top">
+                                    @else
+                                        <img src="{{ asset('images/image.png') }}" class="card-img-top">
+                                    @endif
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $form['username'] }}<span class="rating-star"> ★
+                                                {{ $form['rate'] }}</span>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     @endif
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $form['username'] }}<span class="rating-star"> ★
-                                {{ $form['rate'] }}</span>
-                        </h5>
+                @else
+                    <!-- Card -->
+                    <div class="col anketa">
+                        <a href="{{ url('form/' . $form['id']) }}">
+                            <div class="card profile-card h-100 shadow">
+                                @if (isset($form['photo']))
+                                    <img src="{{ asset($form['photo']) }}" class="card-img-top">
+                                @else
+                                    <img src="{{ asset('images/image.png') }}" class="card-img-top">
+                                @endif
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $form['username'] }}<span class="rating-star"> ★
+                                            {{ $form['rate'] }}</span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
-            </a>
-        </div>
-        @endif
-        @else
-        <!-- Card -->
-        <div class="col anketa">
-            <a href="{{ url('form/' . $form['id']) }}">
-                <div class="card profile-card h-100 shadow">
-                    @if(isset($form['photo']))
-                    <img src="{{ asset($form['photo']) }}" class="card-img-top">
-                    @else
-                    <img src="{{ asset('images/image.png') }}" class="card-img-top">
-                    @endif
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $form['username'] }}<span class="rating-star"> ★
-                                {{ $form['rate'] }}</span>
-                        </h5>
-                    </div>
-                </div>
-            </a>
-        </div>
-        @endif
+                @endif
 
-        @endforeach
+            @endforeach
 
+        </div>
     </div>
-</div>
+
+    <script>
+        const anketa_list = document.getElementById('anketa_list');
+
+        // Обработчик клика на элементе anketa_list
+        anketa_list.addEventListener('click', function(event) {
+            // Проверяем, был ли клик над элементом с классом anketa
+            if (event.target.classList.contains('anketa')) {
+
+                let el = event.target;
+
+                for (let i = 0; i < 3; i++) { // ищем div с data-url в родительских объектах
+                    if (el.classList.contains('anketa')) {
+                        anketa_div = el
+                    }
+                    el = el.parentElement;
+                }
+
+                url = anketa_div.dataset.url
+                window.location.href = url;
+                console.log("12123")
+            }
+        });
+    </script>
 
 @endsection
