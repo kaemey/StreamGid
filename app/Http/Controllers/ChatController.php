@@ -16,12 +16,14 @@ class ChatController extends Controller
         checkAuth();
         $userId = Auth::user()->id;
 
+        $chat_id = null; // нужен для общего шаблона
+
         $chats = Chat::where('user1_id', $userId)
             ->orWhere('user2_id', $userId)
             ->with(['lastMessage'])
             ->get();
 
-        return view('chat.index', compact('chats', 'userId'));
+        return view('chat.index', compact('chats', 'userId', 'chat_id'));
     }
 
     public function show($chat_id)

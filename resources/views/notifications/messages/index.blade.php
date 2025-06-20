@@ -13,7 +13,7 @@
     <!-- Указываем favicon -->
     <link rel="icon" href="{{ config('app.url') }}/images/favicon.ico" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="{{ config('app.url') }}/images/apple-touch-icon.png">
-    <link rel="manifest" href="{{ config('app.url') }}/site.webmanifest">
+    <link rel="manifest" href="{{ config('app.url') }}/images/site.webmanifest">
     <title>Новое сообщение</title>
     <style>
         body {

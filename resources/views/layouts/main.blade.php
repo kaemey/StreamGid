@@ -10,6 +10,9 @@ $cities = City::all();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('/images/favicon.ico') }}" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="{{ asset('/images/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('/images//site.webmanifest') }}">
 
     <title>Stream gid</title>
 
@@ -34,7 +37,8 @@ $cities = City::all();
         <div class="ms-auto">
             <div class="d-flex align-items-center gap-3 auth">
                 @if (Auth::check())
-                    <a href="{{ route('chat_index') }}" class="text-white fs-1"><i class="bi bi-chat-dots-fill"></i></a>
+                    <a href="{{ route('chat_index') }}" class="text-white fs-1"><i
+                            class="bi bi-chat-dots-fill"></i></a>
                     <a href="{{ route('profile') }}" class="text-white fs-1"><i class="bi bi-person-circle"></i></a>
 
                     <form action="{{ route('logout') }}" method="POST" class="d-flex align-items-center m-0 p-0">

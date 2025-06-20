@@ -6,8 +6,9 @@
     <style>
         .chat-wrapper {
             display: flex;
-            height: 75vh;
+            flex-direction: row;
             gap: 1rem;
+            height: 75vh;
         }
 
         .chat-list-panel {
@@ -23,13 +24,17 @@
             align-items: center;
             padding: 12px 16px;
             border-bottom: 1px solid #f0f0f0;
-            transition: background-color 0.2s ease;
             text-decoration: none;
             color: inherit;
+            transition: background-color 0.2s ease;
         }
 
         .chat-item:hover {
             background-color: #f1f1f1;
+        }
+
+        .chat-item-active {
+            background-color: #5cabff;
         }
 
         .chat-avatar {
@@ -60,31 +65,53 @@
         .chat-time {
             font-size: 0.75rem;
             color: #999;
-            white-space: nowrap;
             margin-left: 8px;
+            white-space: nowrap;
         }
 
         .chat-panel {
             flex: 1;
             display: flex;
             flex-direction: column;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(135deg, #f0f4ff, #ffffff);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e7ff;
             overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            background: #0d6efd;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            border-bottom: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .chat-body {
             flex-grow: 1;
             overflow-y: auto;
-            padding: 1rem;
-            background: #f0f2f5;
+            padding: 1.5rem;
+            background: #f8faff;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+
+        .chat-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 6px;
         }
 
         .message-bubble {
             display: flex;
             margin-bottom: 1rem;
-            width: 100%;
+            animation: fadeIn 0.3s ease;
         }
 
         .message-bubble.left {
@@ -97,11 +124,10 @@
 
         .bubble-content {
             max-width: 70%;
-            padding: 0.75rem 1rem;
+            padding: 0.8rem 1.2rem;
             border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
             word-break: break-word;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .message-bubble.left .bubble-content {
@@ -118,27 +144,45 @@
 
         .bubble-content small {
             font-size: 0.75rem;
-            color: #ccc;
             display: block;
-            margin-top: 0.25rem;
+            margin-top: 0.4rem;
             text-align: right;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .message-bubble.left .bubble-content small {
+            color: #888;
         }
 
         .chat-input-form {
             display: flex;
             padding: 1rem;
             background: #fff;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #e6ecf0;
         }
 
         .chat-input-form input[type="text"] {
             border-radius: 20px;
             padding-left: 1rem;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .chat-input-form button {
             border-radius: 20px;
             padding: 0 1.25rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
@@ -159,7 +203,7 @@
 
     <div class="col-md-9">
         <div class="chat-wrapper">
-            <!-- Левая панель: список чатов -->
+            <!-- Левая панель -->
             <div class="chat-list-panel">
                 @if (count($chats) > 0)
                     @foreach ($chats as $chat)
@@ -169,7 +213,8 @@
                             $lastMessage = $chat->lastMessage;
                         @endphp
 
-                        <a href="{{ route('chat_show', ['id' => $chat->id]) }}" class="chat-item">
+                        <a href="{{ route('chat_show', ['id' => $chat->id]) }}"
+                            class="chat-item {{ $chat->id == $chat_id ? 'chat-item-active' : '' }}">
                             <img src="{{ asset($otherUser->avatar) }}" alt="Аватар" class="chat-avatar">
                             <div class="chat-info">
                                 <div class="chat-name">{{ $otherUser->name }}</div>
@@ -186,8 +231,9 @@
                 @endif
             </div>
 
-            <!-- Правая панель: активный чат -->
+            <!-- Правая панель -->
             <div class="chat-panel">
+                <div class="chat-header">Чат</div>
                 @if (isset($messages))
                     <div class="chat-body" id="chat-messages">
                         @forelse ($messages as $message)
@@ -210,7 +256,6 @@
                         @csrf
                         <input type="hidden" name="chat_id" value="{{ $chat_id }}">
                         <input type="hidden" name="to_id" value="{{ $to_id }}">
-
                         <input type="text" name="text" class="form-control me-2" placeholder="Введите сообщение..."
                             required>
                         <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i></button>
@@ -221,9 +266,10 @@
             </div>
         </div>
     </div>
+
     <script>
         window.onload = function() {
-            let container = document.getElementById('chat-messages');
+            const container = document.getElementById('chat-messages');
             if (container) container.scrollTop = container.scrollHeight;
         };
     </script>
