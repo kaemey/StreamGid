@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Form;
@@ -12,6 +13,7 @@ class FormController extends Controller
     //
     public function index($id)
     {
+        $categories = Category::all();
         $form = Form::find($id);
         $user = $form->user->toArray();
         $user['about'] = $form->about;
@@ -20,7 +22,7 @@ class FormController extends Controller
 
         $timing = timing($form);
 
-        return view('form', compact('user', 'timing'));
+        return view('form', compact('user', 'timing', 'categories'));
     }
 
     public function order($id)

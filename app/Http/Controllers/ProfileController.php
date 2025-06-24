@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -16,11 +17,11 @@ class ProfileController extends Controller
         checkAuth();
         $user = Auth::user();
         if ($user->isStreamer == "true") {
+            $categories = Category::all();
             $timing = timing($user->form);
-            $categories = explode(",", $user->form->categories);
+            $user->categories = explode(",", $user->form->categories);
             $user = $user->toArray();
-            $user["categories"] = $categories;
-            return view('profile.streamer.index', compact('user', 'timing'));
+            return view('profile.streamer.index', compact('user', 'timing', 'categories'));
         } else {
             $user = $user->toArray();
             return view('profile.index', compact('user'));
@@ -33,6 +34,7 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         if ($user->isStreamer == "true") {
+            $categories = Category::all();
             $form = $user->form;
             $timing = timing($form);
 
@@ -46,7 +48,7 @@ class ProfileController extends Controller
             $user = $user->toArray();
             $user['active'] = $form['active'];
             $user["categories"] = explode(",", $form["categories"]);
-            return view('profile.streamer.edit', compact('user', 'timing'));
+            return view('profile.streamer.edit', compact('user', 'timing', 'categories'));
         } else {
             return view('profile.edit', compact('user'));
         }

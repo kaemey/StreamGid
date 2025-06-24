@@ -47,17 +47,17 @@
 
                                 <div class="border rounded p-3 bg-white shadow-sm">
                                     <div class="row row-cols-2 row-cols-md-3 g-2">
-                                        @for ($i = 0; $i < getCategoryCount(); $i++)
+                                        @foreach ($categories as $category)
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="categories[]"
-                                                    value="{{ $i }}" id="cat-{{ $i }}"
-                                                    @if (in_array($i, $user['categories'])) checked @endif>
-                                                <label class="form-check-label" for="cat-{{ $i }}">
-                                                    {{ getCategoryAsString($i) }}
+                                                    value="{{ $category->id }}" id="cat-{{ $category->id }}"
+                                                    @if (in_array($category->id, $user['categories'])) checked @endif>
+                                                <label class="form-check-label" for="cat-{{ $category->id }}">
+                                                    {{ $category->name }}
                                                 </label>
 
                                             </div>
-                                        @endfor
+                                        @endforeach
                                     </div>
                                     <small class="text-muted">Выберите одну или несколько категорий, подходящих вашему
                                         контенту.</small>

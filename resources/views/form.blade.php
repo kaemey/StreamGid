@@ -61,16 +61,16 @@
                                     <div class="fw-semibold text-secondary"><i class="bi bi-tags-fill me-1"></i>Категории:
                                     </div>
                                     <div class="d-flex flex-wrap gap-2">
-                                        @for ($i = 0; $i < getCategoryCount(); $i++)
+                                        @foreach ($categories as $category)
                                             <span class="badge rounded-pill px-3 py-2 shadow-sm fw-semibold"
                                                 style="
-        background-color: {{ in_array($i, $user['categories']) ? '#0d6efd' : '#dc3545' }};
+        background-color: {{ in_array($category->id, $user['categories']) ? '#0d6efd' : '#dc3545' }};
         color: white;
         font-size: 0.95rem;
     ">
-                                                {{ getCategoryAsString($i) }}
+                                                {{ $category->name }}
                                             </span>
-                                        @endfor
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
