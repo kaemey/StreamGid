@@ -24,9 +24,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $forms = Form::all();
+        $request = $request->toArray();
+
+        if (isset($request['city'])) {
+            $forms = Form::find(["city_id" => $request['city']]);
+        } else {
+            $forms = Form::all();
+        }
+
         $formsData = [];
         foreach ($forms as $form) {
 

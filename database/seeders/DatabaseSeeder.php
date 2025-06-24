@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\Category;
 use App\Models\Form;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +25,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $streamer = Form::factory()->create()->user;
-        //Create test streamer
+        //Создание тестового стримера
         $streamer->update([
             'name' => 'Стример',
             'isStreamer' => 'true',
@@ -34,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user = User::factory()->create();
-        //Create test user
+        //Создание тестового пользователя
         $user->update([
             'name' => 'User',
             'isStreamer' => '',
@@ -42,6 +43,16 @@ class DatabaseSeeder extends Seeder
             'email' => "user@mail.ru",
             'password' => Hash::make('user'),
         ]);
+
+        //Создание категорий
+        Category::create(["name" => "Архитектура и достопримечательности"]);
+        Category::create(["name" => "Местная кухня и кафе"]);
+        Category::create(["name" => "Повседневная жизнь"]);
+        Category::create(["name" => "Природа и парки"]);
+        Category::create(["name" => "Транспорт и инфраструктура"]);
+        Category::create(["name" => "Современное искусство и культура"]);
+        Category::create(["name" => "Ночные развлечения"]);
+        Category::create(["name" => "Пляжи и набережные"]);
 
     }
 }

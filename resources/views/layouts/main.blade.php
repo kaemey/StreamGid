@@ -1,7 +1,9 @@
 <?php
 use App\Models\City;
+use App\Models\Category;
 
 $cities = City::all();
+$categories = Category::all();
 ?>
 
 <!DOCTYPE html>
@@ -62,21 +64,55 @@ $cities = City::all();
 
                 <!-- Sidebar -->
                 <div class="col-md-3 mb-4">
-                    <div class="city-scroll p-2 shadow-sm rounded bg-light">
-                        <a href="{{ url('') }}" class="btn btn-warning fw-bold mb-3 shadow-sm w-100">
-                            <i class="bi bi-globe2 me-2"></i>Все города
-                        </a>
+                    <div class="p-3 shadow-sm rounded bg-light">
 
-                        <div class="d-grid gap-2">
-                            @foreach ($cities as $city)
-                                <a href="{{ url('?city=' . $city['name']) }}"
-                                    class="city-button btn btn-outline-primary text-start">
-                                    <i class="bi bi-geo-alt-fill me-1"></i>{{ $city['name'] }}
-                                </a>
-                            @endforeach
-                        </div>
+                        <form method="GET" action="{{ url('') }}">
+                            <!-- Город -->
+                            <div class="mb-3">
+                                <label for="city" class="form-label fw-bold">Выберите город</label>
+                                <select name="city" id="city" class="form-select">
+                                    <option value="">Все города</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}"
+                                            {{ request('city') == $city->id ? 'selected' : '' }}>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Категория -->
+                            <div class="mb-3">
+                                <label for="category" class="form-label fw-bold">Категория</label>
+                                <select name="category" id="category" class="form-select">
+                                    <option value="">Все категории</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ request('category') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Отзывы -->
+                            <div class="mb-3">
+                                <label for="reviews" class="form-label fw-bold">Отзывы</label>
+                                <select name="reviews" id="reviews" class="form-select">
+                                    <option value="">Неважно</option>
+                                    <option value="with" {{ request('reviews') === 'with' ? 'selected' : '' }}>Только
+                                        с отзывами</option>
+                                    <option value="without" {{ request('reviews') === 'without' ? 'selected' : '' }}>
+                                        Без отзывов</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100"><i
+                                    class="bi bi-funnel-fill me-1"></i>Применить</button>
+                        </form>
+
                     </div>
                 </div>
+                <!-- Sidebar -->
 
                 @yield('content')
 
