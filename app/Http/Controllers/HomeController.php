@@ -28,10 +28,35 @@ class HomeController extends Controller
     {
         $request = $request->toArray();
 
-        if (isset($request['city'])) {
-            $forms = Form::find(["city_id" => $request['city']]);
+        $haveCity = isset($request['city']);
+        $haveCategory = isset($request['category']);
+
+        $forms = collect();
+
+        if ($haveCategory) {
+            if ($haveCity) {
+                $formsTemp = Form::where(["city_id" => $request['city']])->get();
+                foreach ($formsTemp as $formTemp) {
+                    $catsInForm = explode(',', $formTemp->categories);
+                    if (in_array($request['category'], $catsInForm))
+                        $forms = $forms->push($formTemp);
+                }
+            } else {
+                $formsTemp = Form::All();
+                foreach ($formsTemp as $formTemp) {
+                    $catsInForm = explode(',', $formTemp->categories);
+                    if (in_array($request['category'], $catsInForm)) {
+                        $forms = $forms->push($formTemp);
+                    }
+
+                }
+            }
         } else {
-            $forms = Form::all();
+            if ($haveCity) {
+                $forms = Form::where(["city_id" => $request['city']])->get();
+            } else {
+                $forms = Form::All();
+            }
         }
 
         $formsData = [];
