@@ -26,25 +26,25 @@
                         <tbody>
                             @forelse ($orders as $order)
                                 <tr>
-                                    <td>{{ $order['user_name'] }}</td>
-                                    <td>{{ $order['day'] }}</td>
-                                    <td>{{ $order['user_phone'] }}</td>
-                                    <td class="text-start" style="max-width: 300px;">{{ $order['description'] }}</td>
+                                    <td>{{ $order->user->name }}</td>
+                                    <td>{{ getStringDay($order->day) }}</td>
+                                    <td>{{ $order->user->phone }}</td>
+                                    <td class="text-start" style="max-width: 300px;">{{ $order->description }}</td>
                                     <td>
                                         <div class="d-flex flex-column gap-2">
-                                            @if ($order['status'] !== 3 and $order['status'] !== 1)
-                                                <a href="{{ route('acceptOrder', $order['id']) }}"
+                                            @if ($order->status !== 3 and $order->status !== 1)
+                                                <a href="{{ route('acceptOrder', $order->id) }}"
                                                     class="btn btn-success btn-sm">Подтвердить</a>
                                             @endif
 
-                                            @if (in_array($order['status'], [0, 1]))
-                                                <a href="{{ route('cancelOrder', $order['id']) }}"
+                                            @if (in_array($order->status, [0, 1]))
+                                                <a href="{{ route('cancelOrder', $order->id) }}"
                                                     class="btn btn-outline-danger btn-sm">Отменить</a>
                                             @endif
                                         </div>
                                     </td>
-                                    <td>{{ $order['string_status'] }}</td>
-                                    <td>{{ $order['payment_status_string'] }}</td>
+                                    <td>{{ getStringOrderStatusForStreamer($order->status) }}</td>
+                                    <td>{{ getStringPaymentStatus($order->payment_status) }}</td>
                                 </tr>
                             @empty
                                 <tr>

@@ -18,44 +18,16 @@ class OrderController extends Controller
         $user = Auth::user();
 
         if ($user->isStreamer == "true") {
-            $ordersData = Order::where(["streamer_id" => Auth::user()->id])->get();
-
-            $orders = [];
-            foreach ($ordersData as $order) {
-                $userData = User::find($order['user_id']);
-
-                $orders[] = [
-                    "id" => $order->id,
-                    "user_name" => $userData->name,
-                    "user_phone" => $userData->phone,
-                    "day" => getStringDay($order['day']),
-                    "description" => $order['description'],
-                    "status" => $order['status'],
-                    "string_status" => getStringOrderStatusForStreamer($order['status']),
-                    "payment_status_string" => getStringPaymentStatus($order['payment_status'])
-                ];
-            }
+            $orders = Order::where(["streamer_id" => $user->id])->get();
 
             return view('order.streamer.list', compact('orders'));
 
         } else {
-            $ordersData = Order::where(["user_id" => Auth::user()->id])->get();
-            $orders = [];
+            $orders = Order::where(["user_id" => $user->id])->get();
 
-            foreach ($ordersData as $order) {
-                $streamer = User::find($order['streamer_id']);
-                $timing = timing($streamer->form);
-                $orders[] = [
-                    "id" => $order->id,
-                    "streamer_name" => $streamer->name,
-                    "day" => getStringDay($order['day']),
-                    "time" => $timing[getShortStringDay($order['day'])],
-                    "streamer_id" => $streamer->id,
-                    "status" => $order['status'],
-                    "string_status" => getStringOrderStatusForUser($order['status']),
-                    "payment_status_string" => getStringPaymentStatus($order['payment_status'])
-                ];
-
+            foreach ($orders as $order) {
+                $timing = timing($order->streamer->form);
+                $order->time = $timing[getShortStringDay($order['day'])];
             }
             return view('order.list', compact('orders'));
         }

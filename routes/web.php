@@ -19,6 +19,7 @@ Route::get('/order/list', action: [OrderController::class, 'orderList'])->name('
 Route::get('/order/accept/{id}', action: [OrderController::class, 'acceptOrder'])->name('acceptOrder');
 Route::get('/order/cancel/{id}', action: [OrderController::class, 'cancelOrder'])->name('cancelOrder');
 Route::get('/order/pay_order/{id}', action: [OrderController::class, 'payOrder'])->name('payOrder');
+Route::get('/order/finishOrder/{id}', action: [OrderController::class, 'finishOrder'])->name('finishOrder');
 
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');

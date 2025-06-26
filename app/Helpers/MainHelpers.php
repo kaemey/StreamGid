@@ -132,6 +132,8 @@ function getStringOrderStatusForUser($status)
             return "Отменён стримером";
         case 3:
             return "Отменён вами";
+        case 4:
+            return "Выполнен";
     }
 }
 
@@ -146,6 +148,8 @@ function getStringOrderStatusForStreamer($status)
             return "Отменён вами";
         case 3:
             return "Отменён пользователем";
+        case 4:
+            return "Выполнен";
     }
 }
 
@@ -157,4 +161,9 @@ function getStringPaymentStatus($status)
         case 1:
             return "Оплачен";
     }
+}
+
+function userIsStreamer($user)
+{
+    return $user->isStreamer == "true";
 }

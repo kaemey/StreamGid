@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("to_id");
             $table->foreignId("from_id");
+            $table->foreignId("order_id");
             $table->tinyInteger("point");
         });
     }
