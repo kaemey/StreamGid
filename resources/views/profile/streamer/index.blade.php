@@ -36,6 +36,10 @@
                         <td>{{ $user['email'] }}</td>
                     </tr>
                     <tr>
+                        <th><i class="bi bi-geo-alt-fill me-2 text-info"></i>Город</th>
+                        <td>{{ $user->form->city->name }}</td>
+                    </tr>
+                    <tr>
                         <th><i class="bi bi-image-fill me-2 text-info"></i>Аватар</th>
                         <td>
                             <div class="mb-3">

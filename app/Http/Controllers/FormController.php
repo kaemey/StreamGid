@@ -15,7 +15,7 @@ class FormController extends Controller
     {
         $categories = Category::all();
         $form = Form::find($id);
-        $user = $form->user->toArray();
+        $user = $form->user;
         $user['about'] = $form->about;
         $user['form_id'] = $form->id;
         $user['categories'] = explode(",", $form->categories);

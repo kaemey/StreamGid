@@ -45,8 +45,12 @@
                             {{ $user['rate'] }}
                             <img src="{{ asset('images/star.png') }}" alt="Звезда" style="width: 20px;">
                         </td>
-                    </tr>
 
+                    </tr>
+                    <tr>
+                        <th><i class="bi bi-geo-alt-fill me-2 text-info"></i>Город</th>
+                        <td>{{ $user->form->city->name ?? 'Не указан' }}</td>
+                    </tr>
                     <tr>
                         <th><i class="bi bi-image-fill me-2 text-info"></i>Фото</th>
                         <td>

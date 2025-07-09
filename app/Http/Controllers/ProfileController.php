@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Category;
+use App\Models\City;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -20,10 +21,8 @@ class ProfileController extends Controller
             $categories = Category::all();
             $timing = timing($user->form);
             $user->categories = explode(",", $user->form->categories);
-            $user = $user->toArray();
             return view('profile.streamer.index', compact('user', 'timing', 'categories'));
         } else {
-            $user = $user->toArray();
             return view('profile.index', compact('user'));
         }
 
@@ -34,6 +33,7 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         if ($user->isStreamer == "true") {
+            $cities = City::all();
             $categories = Category::all();
             $form = $user->form;
             $timing = timing($form);
@@ -45,22 +45,23 @@ class ProfileController extends Controller
                     $timing[$key][2] = "";
             }
 
-            $user = $user->toArray();
             $user['active'] = $form['active'];
             $user["categories"] = explode(",", $form["categories"]);
-            return view('profile.streamer.edit', compact('user', 'timing', 'categories'));
+            return view('profile.streamer.edit', compact('user', 'timing', 'categories', 'cities'));
         } else {
-            return view('profile.edit', compact('user'));
+            return view('profile.edit', compact('user', ));
         }
 
     }
     public function update(Request $request)
     {
+
         checkAuth();
         $request->validate([
             'name' => 'required',
             'phone' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'city_id' => 'required'
         ]);
 
         $user = Auth::user();
@@ -82,9 +83,11 @@ class ProfileController extends Controller
             if (isset($request['active']))
                 $active = '1';
 
-            $user->form->update(['timing' => $timing, 'active' => $active]);
+            $user->form->update(['timing' => $timing, 'active' => $active, 'city_id' => $request["city_id"]]);
             //Обновление категорий
-            $user->form->update(["categories" => implode(",", $request["categories"])]);
+            if (isset($request["categories"]))
+                $user->form->update(["categories" => implode(",", $request["categories"])]);
+
         }
 
         $userData = [

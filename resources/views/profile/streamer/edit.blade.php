@@ -37,7 +37,22 @@
                                 <input type="text" class="form-control" name="email" value="{{ $user['email'] }}">
                             </td>
                         </tr>
-
+                        <tr>
+                            <th>
+                                <i class="bi bi-geo-alt-fill me-2 text-info"></i>Город
+                            </th>
+                            <td>
+                                <select class="form-select" name="city_id">
+                                    <option value="">-- Выберите город --</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}"
+                                            @if ($user->form->city->name === $city->name) selected @endif>
+                                            {{ $city->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
                         <tr>
                             <th>
                                 <i class="bi bi-tags-fill me-2 text-info"></i>Категории
