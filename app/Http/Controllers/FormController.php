@@ -27,7 +27,6 @@ class FormController extends Controller
 
     public function order($id)
     {
-        checkAuth();
         $form = Form::find($id);
         $streamer = $form->user;
         $timing = timing($form);

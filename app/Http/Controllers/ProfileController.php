@@ -6,8 +6,6 @@ use App\Models\City;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\UploadedFile;
 use App\Models\User;
 
 class ProfileController extends Controller
@@ -15,7 +13,6 @@ class ProfileController extends Controller
 
     public function index()
     {
-        checkAuth();
         $user = Auth::user();
         if ($user->isStreamer == "true") {
             $categories = Category::all();
@@ -29,7 +26,6 @@ class ProfileController extends Controller
     }
     public function edit()
     {
-        checkAuth();
         $user = Auth::user();
 
         if ($user->isStreamer == "true") {
@@ -55,8 +51,6 @@ class ProfileController extends Controller
     }
     public function update(Request $request)
     {
-
-        checkAuth();
         $request->validate([
             'name' => 'required',
             'phone' => 'required',
@@ -110,7 +104,6 @@ class ProfileController extends Controller
     }
     public function upload_avatar(Request $request): RedirectResponse
     {
-        checkAuth();
         $request->validate([
             'avatar' => 'required|image',
         ]);

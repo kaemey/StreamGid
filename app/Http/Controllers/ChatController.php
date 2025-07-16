@@ -13,7 +13,6 @@ class ChatController extends Controller
 {
     public function index()
     {
-        checkAuth();
         $userId = Auth::user()->id;
 
         $chat_id = null; // нужен для общего шаблона
@@ -28,7 +27,6 @@ class ChatController extends Controller
 
     public function show($chat_id)
     {
-        checkAuth();
         $userId = Auth::user()->id;
 
         $chats = Chat::where('user1_id', $userId)
@@ -83,8 +81,6 @@ class ChatController extends Controller
 
     public function sendMessage(Request $request)
     {
-        checkAuth();
-
         $request->validate([
             'chat_id' => 'required|exists:chats,id',
             'to_id' => 'required',

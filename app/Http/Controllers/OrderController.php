@@ -14,7 +14,6 @@ class OrderController extends Controller
     //
     public function orderList()
     {
-        checkAuth();
         $user = Auth::user();
 
         if ($user->isStreamer == "true") {
@@ -62,7 +61,6 @@ class OrderController extends Controller
 
     public function acceptOrder($id)
     {
-        checkAuth();
         $user = Auth::user();
         $order = Order::find($id);
         if ($order->streamer_id == $user->id) {
@@ -72,7 +70,6 @@ class OrderController extends Controller
     }
     public function cancelOrder($id)
     {
-        checkAuth();
         $user = Auth::user();
         $order = Order::find($id);
         if ($order->streamer_id == $user->id) {
@@ -86,7 +83,6 @@ class OrderController extends Controller
 
     public function payOrder($id)
     {
-        checkAuth();
         $user = Auth::user();
         $order = Order::find($id);
 
