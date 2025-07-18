@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string("active");
             $table->string("categories")->nullable();
             $table->string('timing')->nullable();
+            $table->float('rate', 1)->default(0);
         });
     }
 

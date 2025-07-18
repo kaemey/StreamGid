@@ -3,6 +3,7 @@
 @section('title', 'Список заказов')
 
 @section('content')
+
     <div class="col-md-9">
         <div class="card shadow-sm rounded-4">
             <div class="card-header bg-primary text-white text-center rounded-top-4">
@@ -50,6 +51,32 @@
                                                 <a href="{{ route('cancelOrder', $order->id) }}"
                                                     class="btn btn-outline-danger btn-sm">Отменить</a>
                                             </div>
+                                        @elseif ($order->status == 4)
+                                            @if ($order->review_point > 0)
+                                                <div class="text-warning">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $order->review_point)
+                                                            <i class="bi bi-star-fill"></i>
+                                                        @else
+                                                            <i class="bi bi-star"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                            @else
+                                                <form action="{{ route('sendReviewPoint', $order->id) }}" method="POST"
+                                                    class="d-inline-block">
+                                                    @csrf
+                                                    <div class="d-flex gap-1 justify-content-center">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            <button name="rating" value="{{ $i }}"
+                                                                type="submit" class="btn btn-outline-warning p-1"
+                                                                title="Оценить на {{ $i }}">
+                                                                ★
+                                                            </button>
+                                                        @endfor
+                                                    </div>
+                                                </form>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>{{ getStringPaymentStatus($order['payment_status']) }}</td>

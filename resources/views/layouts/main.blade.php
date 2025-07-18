@@ -96,13 +96,15 @@ $categories = Category::all();
 
                             <!-- Отзывы -->
                             <div class="mb-3">
-                                <label for="reviews" class="form-label fw-bold">Отзывы</label>
+                                <label for="reviews" class="form-label fw-bold">Рейтинг</label>
                                 <select name="reviews" id="reviews" class="form-select">
                                     <option value="">Неважно</option>
+                                    <option value="hight" {{ request('reviews') === 'hight' ? 'selected' : '' }}>4 и
+                                        выше</option>
                                     <option value="with" {{ request('reviews') === 'with' ? 'selected' : '' }}>Только
-                                        с отзывами</option>
+                                        с рейтингом</option>
                                     <option value="without" {{ request('reviews') === 'without' ? 'selected' : '' }}>
-                                        Без отзывов</option>
+                                        Без рейтинга</option>
                                 </select>
                             </div>
 

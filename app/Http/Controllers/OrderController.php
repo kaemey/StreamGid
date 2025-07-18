@@ -81,10 +81,9 @@ class OrderController extends Controller
         return redirect()->route("orderList");
     }
 
-    public function payOrder($id)
+    public function payOrder(Order $order)
     {
         $user = Auth::user();
-        $order = Order::find($id);
 
         if ($order->user_id == $user->id) {
             return view("order.payorder");
@@ -92,5 +91,13 @@ class OrderController extends Controller
             return redirect()->route("auth");
         }
 
+    }
+
+    public function sendReviewPoint($id, Request $request)
+    {
+        $order = Order::find($id);
+        $order->update(['review_point' => $request['rating']]);
+        $order->streamer->form->recalculate_rating($request['rating']);
+        return redirect()->route("orderList");
     }
 }

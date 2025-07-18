@@ -1,5 +1,6 @@
 <?php
 
+//Кастомный Middleware - замена 'auth'
 use App\Http\Middleware\Authenticate;
 use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::get('/order/cancel/{id}', action: [OrderController::class, 'cancelOrder'])->name('cancelOrder');
     Route::get('/order/pay_order/{id}', action: [OrderController::class, 'payOrder'])->name('payOrder');
     Route::get('/order/finishOrder/{id}', action: [OrderController::class, 'finishOrder'])->name('finishOrder');
+    Route::post('/order/sendReviewPoint/{id}', action: [OrderController::class, 'sendReviewPoint'])->name('sendReviewPoint');
 
     Route::get('/chats', [ChatController::class, 'index'])->name('chat_index');
     Route::get('/chats/{id}', [ChatController::class, 'show'])->name('chat_show');

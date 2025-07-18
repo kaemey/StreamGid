@@ -28,38 +28,38 @@ class HomeController extends Controller
     {
         $request = $request->toArray();
 
-        $haveCity = isset($request['city']);
-        $haveCategory = isset($request['category']);
+        $query = Form::where('id', '>', 0);
 
-        $forms = collect();
+        if (isset($request['city'])) {
+            $query->where(["city_id" => $request['city']]);
+        }
 
-        if ($haveCategory) {
-            if ($haveCity) {
-                $formsTemp = Form::where(["city_id" => $request['city']])->get();
-                foreach ($formsTemp as $formTemp) {
-                    $catsInForm = explode(',', $formTemp->categories);
-                    if (in_array($request['category'], $catsInForm))
-                        $forms = $forms->push($formTemp);
-                }
-            } else {
-                $formsTemp = Form::All();
-                foreach ($formsTemp as $formTemp) {
-                    $catsInForm = explode(',', $formTemp->categories);
-                    if (in_array($request['category'], $catsInForm)) {
-                        $forms = $forms->push($formTemp);
-                    }
-
-                }
-            }
-        } else {
-            if ($haveCity) {
-                $forms = Form::where(["city_id" => $request['city']])->get();
-            } else {
-                $forms = Form::All();
+        if (isset($request['reviews'])) {
+            if ($request['reviews'] == "with") {
+                $query->where("rate", ">", 0);
+            } elseif ($request['reviews'] == "without") {
+                $query->where("rate", "=", 0);
+            } elseif ($request['reviews'] == "hight") {
+                $query->where("rate", ">=", 4);
             }
         }
 
+        $formsTemp = $query->get();
+        $forms = collect();
+
+        if (isset($request['category'])) {
+            foreach ($formsTemp as $formTemp) {
+                $catsInForm = explode(',', $formTemp->categories);
+                if (in_array($request['category'], $catsInForm)) {
+                    $forms = $forms->push($formTemp);
+                }
+            }
+        } else {
+            $forms = $formsTemp;
+        }
+
         $formsData = [];
+
         foreach ($forms as $form) {
 
             if ($form->active == "1") {
@@ -69,7 +69,7 @@ class HomeController extends Controller
                     'photo' => $user->avatar,
                     'username' => $user->name,
                     'id' => $form->id,
-                    'rate' => $user->rate
+                    'rate' => $form->rate
                 ];
             }
 

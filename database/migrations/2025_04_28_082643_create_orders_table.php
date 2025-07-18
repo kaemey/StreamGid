@@ -14,13 +14,14 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->text("description");
-            $table->tinyInteger("status");
-            $table->tinyInteger("finished_from_user")->default(0);
-            $table->tinyInteger("finished_from_streamer")->default(0);
-            $table->tinyInteger("day");
+            $table->unsignedTinyInteger("status");
+            $table->unsignedTinyInteger("finished_from_user")->default(0);
+            $table->unsignedTinyInteger("finished_from_streamer")->default(0);
+            $table->unsignedTinyInteger("day");
             $table->foreignId("user_id");
             $table->foreignId("streamer_id");
-            $table->smallInteger("payment_status")->default(0);
+            $table->unsignedTinyInteger("review_point")->nullable();
+            $table->unsignedTinyInteger("payment_status")->default(0);
         });
     }
 

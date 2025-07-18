@@ -25,7 +25,6 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'rate' => fake()->randomFloat('1', '4', '5'),
             'isStreamer' => 'true',
             'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
