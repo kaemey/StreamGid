@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('categories')->nullable();
             $table->string('phone')->unique();
             $table->string('avatar')->nullable();
-            $table->string('isStreamer');
+            $table->boolean('isStreamer');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use Http;
 use App\Models\Category;
 use App\Models\City;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Controllers\AuthController;
 
 class ProfileController extends Controller
 {

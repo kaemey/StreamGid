@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ChatController;
-use App\Models\Message;
+use App\Notifications\ConfirmOrderFromStreamerNotification;
 
 class OrderController extends Controller
 {
@@ -34,6 +34,10 @@ class OrderController extends Controller
 
     public function sendOrder(Request $request)
     {
+        //Проверка на вшивость
+        if (Auth::user()->isStreamer)
+            return redirect()->route('home');
+
         $data = $request->toArray();
         Order::create([
             'streamer_id' => $data['streamer_id'],
@@ -49,29 +53,34 @@ class OrderController extends Controller
         $chat = ChatController::getOrCreateChat($userId, $data['streamer_id']);
 
         // Отправляем сообщение
-        Message::create([
-            'chat_id' => $chat->id,
-            'from_id' => $userId,
-            'to_id' => $data['streamer_id'],
-            'text' => 'Добрый день! Я заказал у вас стрим!',
-        ]);
+        ChatController::createMessage($chat->id, 'Добрый день! Я заказал у вас стрим!', $data['streamer_id']);
 
         return redirect()->route('orderSuccess');
     }
 
-    public function acceptOrder($id)
+    public function acceptOrder(Order $order)
     {
         $user = Auth::user();
-        $order = Order::find($id);
-        if ($order->streamer_id == $user->id) {
-            $order->update(["status" => 1]);
-        }
+
+        //Проверка на вшивость
+        if ($order->streamer_id != $user->id)
+            return redirect()->route('home');
+
+        $order->update(["status" => 1]);
+
+        $recipient = User::find($order->user_id);
+        $message = [
+            "text" => "Стример " . $order->streamer->name . " подтвердил ваш заказ!"
+        ];
+        $recipient->notify(new ConfirmOrderFromStreamerNotification($message));
+
+
         return redirect()->route("orderList");
     }
-    public function cancelOrder($id)
+    public function cancelOrder(Order $order)
     {
         $user = Auth::user();
-        $order = Order::find($id);
+
         if ($order->streamer_id == $user->id) {
             $order->update(["status" => 2]);
         }

@@ -14,10 +14,24 @@
             {{-- Кнопка заказа стрима --}}
             <div class="mb-4 px-2">
                 @if (Auth::check())
-                    <a href="{{ route('orderStream', $user['id']) }}" class="btn btn-danger shadow px-4 py-2"
-                        style="min-width: 220px;">
-                        <i class="bi bi-controller me-2"></i>Заказать стрим
-                    </a>
+                    @if (Auth::user()->isStreamer)
+                        <div class="d-flex flex-wrap align-items-center gap-2">
+                            <button class="btn btn-outline-secondary shadow" disabled>
+                                <i class="bi bi-lock-fill me-1"></i>Авторизируйте как обычный пользователь
+                            </button>
+                            <form action="{{ route('logout') }}" method="POST" class="d-flex align-items-center m-0 p-0">
+                                @csrf
+                                <button class="btn btn-outline-primary shadow">
+                                    <i class="bi bi-box-arrow-in-right me-1"></i>Выйти
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <a href="{{ route('orderStream', $user['id']) }}" class="btn btn-danger shadow px-4 py-2"
+                            style="min-width: 220px;">
+                            <i class="bi bi-controller me-2"></i>Заказать стрим
+                        </a>
+                    @endif
                 @else
                     <div class="d-flex flex-wrap align-items-center gap-2">
                         <button class="btn btn-outline-secondary shadow" disabled>

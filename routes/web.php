@@ -2,6 +2,7 @@
 
 //Кастомный Middleware - замена 'auth'
 use App\Http\Middleware\Authenticate;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -10,9 +11,17 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FormController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/auth', [ProfileController::class, 'auth'])->name('auth');
-Route::get('/reg', [ProfileController::class, 'reg'])->name('reg');
+
 Route::get('/form/{id}', [FormController::class, 'index'])->name('form');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/auth', [ProfileController::class, 'auth'])->name('auth');
+    Route::get('/reg', [ProfileController::class, 'reg'])->name('reg');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware([Authenticate::class])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -35,5 +44,3 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::get('/chats/{id}', [ChatController::class, 'show'])->name('chat_show');
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 });
-
-Auth::routes();

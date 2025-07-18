@@ -3,10 +3,12 @@
 namespace App\Notifications;
 
 use App\Models\User;
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NewMessageNotification extends Notification
+class ConfirmOrderFromStreamerNotification extends Notification
 {
 
     protected $message;
@@ -23,11 +25,10 @@ class NewMessageNotification extends Notification
 
     public function toMail($notifiable)
     {
-        $from = User::find($this->message->from_id);
-        $text = $this->message->text;
-        $url = route('chat_show', $this->message->chat_id);
+        $text = $this->message['text'];
+        $url = route('orderList');
         return (new MailMessage)
-            ->subject('Новое сообщение')
-            ->view('notifications.messages.index', compact('from', 'text', 'url'));
+            ->subject('Стример подтвердил заказ!')
+            ->view('notifications.messages.confirmOrder', compact('text', 'url'));
     }
 }
