@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
@@ -39,6 +40,7 @@ class OrderController extends Controller
             return redirect()->route('home');
 
         $data = $request->toArray();
+
         Order::create([
             'streamer_id' => $data['streamer_id'],
             'status' => 0,

@@ -37,6 +37,8 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::get('/order/accept/{id}', action: [OrderController::class, 'acceptOrder'])->name('acceptOrder');
     Route::get('/order/cancel/{id}', action: [OrderController::class, 'cancelOrder'])->name('cancelOrder');
     Route::get('/order/pay_order/{id}', action: [OrderController::class, 'payOrder'])->name('payOrder');
+    Route::get('/order/payment_success/{id}', action: [OrderController::class, 'paymentSuccess'])->name('paymentSuccess');
+    Route::get('/order/payment_fail/{id}', action: [OrderController::class, 'paymentFail'])->name('paymentFail');
     Route::get('/order/finishOrder/{id}', action: [OrderController::class, 'finishOrder'])->name('finishOrder');
     Route::post('/order/sendReviewPoint/{id}', action: [OrderController::class, 'sendReviewPoint'])->name('sendReviewPoint');
 
