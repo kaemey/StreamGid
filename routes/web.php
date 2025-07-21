@@ -11,6 +11,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FormController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/politica', [HomeController::class, 'politica'])->name('politica');
+Route::get('/contacts', [HomeController::class, 'contacts'])->name('contacts');
 
 Route::get('/form/{id}', [FormController::class, 'index'])->name('form');
 
@@ -46,3 +48,5 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::get('/chats/{id}', [ChatController::class, 'show'])->name('chat_show');
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 });
+
+Route::post('/yookassa/webhook', [\App\Http\Controllers\YooKassaWebhookController::class, 'handle']);

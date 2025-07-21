@@ -39,18 +39,25 @@ $categories = Category::all();
         <div class="ms-auto">
             <div class="d-flex align-items-center gap-3 auth">
                 @if (Auth::check())
-                    <a href="{{ route('chat_index') }}" class="text-white fs-1"><i
-                            class="bi bi-chat-dots-fill"></i></a>
-                    <a href="{{ route('profile') }}" class="text-white fs-1"><i class="bi bi-person-circle"></i></a>
-
-                    <form action="{{ route('logout') }}" method="POST" class="d-flex align-items-center m-0 p-0">
+                    <a href="{{ route('orderList') }}" class="text-white fs-1" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Список заказов">
+                        <i class="bi bi-list-check"></i>
+                    </a>
+                    <a href="{{ route('chat_index') }}" class="text-white fs-1" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Чаты">
+                        <i class="bi bi-chat-dots-fill"></i>
+                    </a>
+                    <a href="{{ route('profile') }}" class="text-white fs-1" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Профиль">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                    <form action="{{ route('logout') }}" method="POST" class="d-flex align-items-center m-0 p-0"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Выход">
                         @csrf
-                        <button type="submit" class="btn btn-link text-white fs-1 p-0 m-0"><i
-                                class="bi bi-box-arrow-right"></i></button>
+                        <button type="submit" class="btn btn-link text-white fs-1 p-0 m-0">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </button>
                     </form>
-                @else
-                    <a href="{{ route('auth') }}"><button class="btn btn-outline-light me-2">Авторизация</button></a>
-                    <a href="{{ route('reg') }}"> <button class="btn btn-primary">Регистрация</button></a>
                 @endif
             </div>
         </div>
@@ -131,8 +138,8 @@ $categories = Category::all();
                     <p class="mb-0">© {{ date('Y') }} Stream gid. Все права защищены.</p>
                 </div>
                 <div class="col-md-6 text-md-end footer-links">
-                    <a href="#"><i class="bi bi-shield-lock"></i> Политика</a>
-                    <a href="#"><i class="bi bi-envelope"></i> Контакты</a>
+                    <a href="{{ route('politica') }}"><i class="bi bi-shield-lock"></i> Политика</a>
+                    <a href="{{ route('contacts') }}"><i class="bi bi-envelope"></i> Контакты</a>
                 </div>
 
             </div>
@@ -141,6 +148,13 @@ $categories = Category::all();
 
 
     <script src="{{ asset('js/main.js') }}"></script>
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        tooltipTriggerList.forEach(tooltipTriggerEl => {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
+
 </body>
 
 </html>

@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->unsignedTinyInteger("finished_from_user")->default(0);
             $table->unsignedTinyInteger("finished_from_streamer")->default(0);
             $table->unsignedTinyInteger("day");
-            $table->unsignedSmallInteger("amount");
             $table->foreignId("user_id");
             $table->foreignId("streamer_id");
             $table->unsignedTinyInteger("review_point")->nullable();

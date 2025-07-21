@@ -77,4 +77,14 @@ class HomeController extends Controller
 
         return view('main', compact('formsData'));
     }
+
+    public function politica()
+    {
+        return view('politica');
+    }
+
+    public function contacts()
+    {
+        return view('contacts');
+    }
 }

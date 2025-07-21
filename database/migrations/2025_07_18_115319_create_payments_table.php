@@ -14,7 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->foreignId("order_id");
-            $table->unsignedSmallInteger("status")->default(0);
+            $table->unsignedInteger("service_payment_id")->nullable();
+            $table->unsignedInteger("amount_value")->nullable();
+            $table->string("status")->nullable();
+            $table->boolean("paid")->default(false);
+            $table->string("expires_at")->nullable();
+            $table->boolean("test")->default(false);
         });
     }
 
