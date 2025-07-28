@@ -58,6 +58,9 @@ $categories = Category::all();
                             <i class="bi bi-box-arrow-right"></i>
                         </button>
                     </form>
+                @else
+                    <a href="{{ route('auth') }}"><button class="btn btn-outline-light me-2">Авторизация</button></a>
+                    <a href="{{ route('reg') }}"> <button class="btn btn-primary">Регистрация</button></a>
                 @endif
             </div>
         </div>
