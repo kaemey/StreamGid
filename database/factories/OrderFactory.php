@@ -20,9 +20,8 @@ class OrderFactory extends Factory
             "description" => fake()->text(400),
             "status" => 0,
             "day" => rand(1, 7),
-            "amount" => 1000,
             "user_id" => rand(1, 10),
-            "streamer_id" => 11,
+            "streamer_id" => 1,
         ];
     }
 }

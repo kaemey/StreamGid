@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string("categories")->nullable();
             $table->string('timing')->nullable();
             $table->float('rate', 1)->default(0);
+            $table->smallInteger('amount')->default(1000);
         });
     }
 

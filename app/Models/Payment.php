@@ -13,9 +13,9 @@ class Payment extends Model
     {
         static::created(function ($payment) {
             $payment->client = new \YooKassa\Client(new \YooKassa\Client\CurlClient());
-            // $payment->client->setAuth('xxxxxx', 'test_XXXXXXX');
+            $payment->client->setAuth(config("yookassa.ShopID"), config("yookassa.SecretKey"));
             // или Auth-токен
-            $payment->client->setAuthToken(config("yookassa.AuthToken"));
+            // $payment->client->setAuthToken(config("yookassa.AuthToken"));
             $userAgent = $payment->client->getApiClient()->getUserAgent();
             $userAgent->setFramework('Laravel', '11.31');
         });
@@ -75,11 +75,6 @@ class Payment extends Model
         }
 
         return redirect($confirmationUrl);
-    }
-
-    public function getOrderStatus(Order $order)
-    {
-
     }
 
     public function order()

@@ -46,7 +46,7 @@ class OrderController extends Controller
             'status' => 0,
             'user_id' => Auth::user()->id,
             'day' => $data['day'],
-            'description' => $data['description']
+            'description' => $data['description'],
         ]);
 
         $userId = Auth::user()->id;
@@ -60,9 +60,10 @@ class OrderController extends Controller
         return redirect()->route('orderSuccess');
     }
 
-    public function acceptOrder(Order $order)
+    public function acceptOrder($id)
     {
         $user = Auth::user();
+        $order = Order::find($id);
 
         //Проверка на вшивость
         if ($order->streamer_id != $user->id)
@@ -79,9 +80,10 @@ class OrderController extends Controller
 
         return redirect()->route("orderList");
     }
-    public function cancelOrder(Order $order)
+    public function cancelOrder($id)
     {
         $user = Auth::user();
+        $order = Order::find($id);
 
         if ($order->streamer_id == $user->id) {
             $order->update(["status" => 2]);
@@ -92,9 +94,10 @@ class OrderController extends Controller
         return redirect()->route("orderList");
     }
 
-    public function payOrder(Order $order)
+    public function payOrder($id)
     {
         $user = Auth::user();
+        $order = Order::find($id);
 
         if ($order->user_id == $user->id) {
             return view("order.payorder");

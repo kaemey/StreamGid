@@ -17,7 +17,7 @@
                     @if (Auth::user()->isStreamer)
                         <div class="d-flex flex-wrap align-items-center gap-2">
                             <button class="btn btn-outline-secondary shadow" disabled>
-                                <i class="bi bi-lock-fill me-1"></i>Авторизируйте как обычный пользователь
+                                <i class="bi bi-lock-fill me-1"></i>Авторизируйтесь как обычный пользователь
                             </button>
                             <form action="{{ route('logout') }}" method="POST" class="d-flex align-items-center m-0 p-0">
                                 @csrf

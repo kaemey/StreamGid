@@ -18,10 +18,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
+
         $this->call([
             CitySeeder::class,
-            FormSeeder::class,
-            OrderSeeder::class
         ]);
 
         $streamer = Form::factory()->create()->user;
@@ -32,6 +31,11 @@ class DatabaseSeeder extends Seeder
             'phone' => '+79112223344',
             'email' => "streamer@mail.ru",
             'password' => Hash::make('streamer'),
+        ]);
+
+        $this->call([
+            FormSeeder::class,
+            OrderSeeder::class
         ]);
 
         $user = User::factory()->create();

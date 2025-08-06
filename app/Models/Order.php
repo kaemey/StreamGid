@@ -16,7 +16,8 @@ class Order extends Model
     {
         static::created(function ($order) {
             $payment = Payment::create([
-                "order_id" => $order->id
+                "order_id" => $order->id,
+                "amount_value" => $order->streamer->form->amount
             ]);
             $order->update(["payment_id" => $payment->id]);
         });
